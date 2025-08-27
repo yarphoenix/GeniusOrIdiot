@@ -25,15 +25,16 @@ internal static class Program
 
                 Console.WriteLine($"{questionNumber}. {questions[i]}");
 
-                //while (!int.TryParse(Console.ReadLine(), out userAnswer))
-                //{
-                //    PrintError("ОШИБКА: Пожалуйста, введите числовой ответ.");
-                //}
+                int userAnswer;
+                while (!int.TryParse(Console.ReadLine(), out userAnswer))
+                {
+                    PrintError("ОШИБКА: Пожалуйста, введите числовой ответ.");
+                }
 
-                //if (userAnswer == answers[i])
-                //{
-                //    rightAnswersCount++;
-                //}
+                if (userAnswer == answers[i])
+                {
+                    rightAnswersCount++;
+                }
             }
 
             Console.WriteLine("Количество правильных ответов: " + rightAnswersCount);
