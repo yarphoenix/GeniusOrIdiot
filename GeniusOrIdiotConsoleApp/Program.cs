@@ -40,7 +40,7 @@ internal static class Program
             Console.WriteLine("Количество правильных ответов: " + rightAnswersCount);
 
             string diagnosis = GetDiagnosis(questionCount, rightAnswersCount);
-            Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis[rightAnswersCount]}");
+            Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis}");
 
             Console.WriteLine("Хотите пройти тест еще раз? (да/нет)");
             if (!IsRetryRequested())
