@@ -42,6 +42,10 @@ internal static class Program
             string diagnosis = diagnoses.GetDiagnosis(questionCount, rightAnswersCount);
             Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis}");
 
+            //ClearResultsFile();
+
+            SaveResult(userName, rightAnswersCount, diagnosis);
+
             Console.WriteLine("Хотите пройти тест еще раз? (да/нет)");
             if (!IsRetryRequested())
             {
@@ -150,6 +154,52 @@ internal static class Program
 
             PrintError("ОШИБКА: Пожалуйста, введите 'да' или 'нет'.");
         }
+    }
+
+    private static void SaveResult(string userName, int rightAnswersCount, string diagnosis)
+    {
+        const string filePath = "ResultsHistory.txt";
+        const int nameWidth = 15;
+        const int answersWidth = 20;
+        const int diagnosisWidth = 15;
+
+        string header = $"|{CenterText("Имя", nameWidth)}|" +
+                        $"{CenterText("Правильных ответов", answersWidth)}|" +
+                        $"{CenterText("Диагноз", diagnosisWidth)}|";
+
+        var separator = new string('-', header.Length);
+
+        string resultLine = $"|{CenterText(userName, nameWidth)}|" +
+                            $"{CenterText(rightAnswersCount.ToString(), answersWidth)}|" +
+                            $"{CenterText(diagnosis, diagnosisWidth)}|";
+
+        bool writeHeader = !File.Exists(filePath) ||
+                           new FileInfo(filePath).Length == 0;
+
+        using var writer = new StreamWriter(filePath, true);
+        if (writeHeader)
+        {
+            writer.WriteLine(separator);
+            writer.WriteLine(header);
+            writer.WriteLine(separator);
+        }
+
+        writer.WriteLine(resultLine);
+        writer.WriteLine(separator);
+    }
+
+    private static string CenterText(string text, int width)
+    {
+        if (string.IsNullOrEmpty(text)) text = "";
+        int padding = width - text.Length;
+        int padLeft = padding / 2 + text.Length;
+        return text.PadLeft(padLeft).PadRight(width);
+    }
+
+    private static void ClearResultsFile()
+    {
+        const string filePath = "ResultsHistory.txt";
+        File.WriteAllText(filePath, string.Empty);
     }
 
     private static void PrintError(string message)
