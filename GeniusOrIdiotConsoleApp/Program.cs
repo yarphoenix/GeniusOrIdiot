@@ -11,7 +11,7 @@ internal static class Program
 
         string[] questions = GetQuestions(questionCount);
         int[] answers = GetAnswers(questionCount);
-        string[] diagnosis = GetDiagnoses();
+        string[] diagnoses = GetDiagnoses();
 
         while (true)
         {
@@ -38,7 +38,9 @@ internal static class Program
             }
 
             Console.WriteLine("Количество правильных ответов: " + rightAnswersCount);
-            Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis[rightAnswersCount]}");
+
+            string diagnosis = GetDiagnosis(questionCount, rightAnswersCount);
+            Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis}");
 
             Console.WriteLine("Хотите пройти тест еще раз? (да/нет)");
             if (!IsRetryRequested())
@@ -131,6 +133,24 @@ internal static class Program
 
             PrintError("ОШИБКА: Пожалуйста, введите 'да' или 'нет'.");
         }
+    }
+
+    private static string GetDiagnosis(int questionCount, int rightAnswersCount)
+    {
+        var diagnoses = GetDiagnoses();
+        int diagnosisCount = diagnoses.Length;
+
+        if (diagnosisCount == 0)
+            throw new InvalidOperationException("Список диагнозов пуст.");
+
+        rightAnswersCount = Math.Clamp(rightAnswersCount, 0, questionCount);
+
+        double range = (double)(questionCount + 1) / diagnosisCount;
+
+        int index = (int)Math.Floor(rightAnswersCount / range);
+        index = Math.Clamp(index, 0, diagnosisCount - 1);
+
+        return diagnoses[index];
     }
 
     private static void PrintError(string message)
