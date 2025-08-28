@@ -6,9 +6,7 @@ internal static class Program
     {
         Console.WriteLine("Показать историю результатов? (да/нет)");
         if (IsRetryRequested())
-        {
             ShowResultsHistory();
-        }
 
         const int questionCount = 5;
 
@@ -31,16 +29,10 @@ internal static class Program
 
                 Console.WriteLine($"{questionNumber}. {questions[i]}");
 
-                int userAnswer;
-                while (!int.TryParse(Console.ReadLine(), out userAnswer))
-                {
-                    PrintError("ОШИБКА: Пожалуйста, введите числовой ответ.");
-                }
+                int userAnswer = GetUserAnswer();
 
                 if (userAnswer == answers[i])
-                {
                     rightAnswersCount++;
-                }
             }
 
             Console.WriteLine("Количество правильных ответов: " + rightAnswersCount);
@@ -52,9 +44,7 @@ internal static class Program
 
             Console.WriteLine("Хотите пройти тест еще раз? (да/нет)");
             if (!IsRetryRequested())
-            {
                 break;
-            }
 
             Console.Clear();
         }
@@ -109,6 +99,25 @@ internal static class Program
             if (!string.IsNullOrWhiteSpace(userName)) return userName;
 
             PrintError("ОШИБКА: Имя не может быть пустым. Пожалуйста, введите ваше имя.");
+        }
+    }
+
+    private static int GetUserAnswer()
+    {
+        while (true)
+        {
+            try
+            {
+                return int.Parse(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                PrintError("ОШИБКА: Пожалуйста, введите числовой ответ.");
+            }
+            catch (OverflowException)
+            {
+                PrintError("ОШИБКА: Введенное число слишком большое или слишком маленькое.");
+            }
         }
     }
 
