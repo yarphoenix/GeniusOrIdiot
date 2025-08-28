@@ -4,6 +4,12 @@ internal static class Program
 {
     public static void Main(string[] args)
     {
+        Console.WriteLine("Показать историю результатов? (да/нет)");
+        if (IsRetryRequested())
+        {
+            ShowResultsHistory();
+        }
+
         const int questionCount = 5;
 
         string[] questions = GetQuestions(questionCount);
@@ -41,8 +47,6 @@ internal static class Program
 
             string diagnosis = diagnoses.GetDiagnosis(questionCount, rightAnswersCount);
             Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis}");
-
-            //ClearResultsFile();
 
             SaveResult(userName, rightAnswersCount, diagnosis);
 
@@ -196,10 +200,20 @@ internal static class Program
         return text.PadLeft(padLeft).PadRight(width);
     }
 
-    private static void ClearResultsFile()
+    private static void ShowResultsHistory()
     {
         const string filePath = "ResultsHistory.txt";
-        File.WriteAllText(filePath, string.Empty);
+        if (!File.Exists(filePath) || new FileInfo(filePath).Length == 0)
+        {
+            Console.WriteLine("История результатов пуста.");
+            return;
+        }
+
+        using var reader = new StreamReader(filePath);
+        while (reader.ReadLine() is { } line)
+        {
+            Console.WriteLine(line);
+        }
     }
 
     private static void PrintError(string message)
@@ -209,14 +223,4 @@ internal static class Program
         Console.WriteLine(message);
         Console.ForegroundColor = previousColor;
     }
-
-    //private static void PrintError(string message,
-    //    ConsoleColor color = ConsoleColor.Red)
-    //{
-    //    var previousColor = Console.ForegroundColor;
-    //    Console.ForegroundColor = ConsoleColor.Red;
-    //    Console.WriteLine(message);
-
-    //    Console.ForegroundColor = previousColor;
-    //}
 }
