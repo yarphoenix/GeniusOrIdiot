@@ -4,17 +4,23 @@ internal static class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Здравствуйте! Как вас зовут?");
-        string userName = GetName();
+        Console.WriteLine("Показать историю результатов? (да/нет)");
+        if (IsRetryRequested())
+        {
+            ShowResultsHistory();
+        }
 
         const int questionCount = 5;
 
         string[] questions = GetQuestions(questionCount);
         int[] answers = GetAnswers(questionCount);
-        string[] diagnosis = GetDiagnoses();
+        string[] diagnoses = GetDiagnoses();
 
         while (true)
         {
+            Console.WriteLine("Здравствуйте! Как вас зовут?");
+            string userName = GetName();
+
             Shuffle(questions, answers);
 
             var rightAnswersCount = 0;
@@ -38,7 +44,11 @@ internal static class Program
             }
 
             Console.WriteLine("Количество правильных ответов: " + rightAnswersCount);
-            Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis[rightAnswersCount]}");
+
+            string diagnosis = diagnoses.GetDiagnosis(questionCount, rightAnswersCount);
+            Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis}");
+
+            SaveResult(userName, rightAnswersCount, diagnosis);
 
             Console.WriteLine("Хотите пройти тест еще раз? (да/нет)");
             if (!IsRetryRequested())
@@ -50,15 +60,30 @@ internal static class Program
         }
     }
 
-    private static string GetName()
+    private static string[] GetQuestions(int questionCount)
     {
-        while (true)
-        {
-            string? userName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(userName)) return userName;
+        var questions = new string[questionCount];
 
-            PrintError("ОШИБКА: Имя не может быть пустым. Пожалуйста, введите ваше имя.");
-        }
+        questions[0] = "Сколько будет два плюс два умноженное на два?";
+        questions[1] = "Бревно нужно распилить на 10 частей. Сколько нужно сделать распилов?";
+        questions[2] = "Пять свечей горело. Две потухли. Сколько свечей осталось?";
+        questions[3] = "На двух руках 10 пальцев. Сколько пальцев на 5 руках?";
+        questions[4] = "Укол делают каждые полчаса, сколько нужно минут для трёх уколов?";
+
+        return questions;
+    }
+
+    private static int[] GetAnswers(int questionCount)
+    {
+        var answers = new int[questionCount];
+
+        answers[0] = 6;
+        answers[1] = 9;
+        answers[2] = 3;
+        answers[3] = 25;
+        answers[4] = 60;
+
+        return answers;
     }
 
     private static string[] GetDiagnoses()
@@ -76,30 +101,15 @@ internal static class Program
         return diagnosis;
     }
 
-    private static int[] GetAnswers(int questionCount)
+    private static string GetName()
     {
-        var answers = new int[questionCount];
+        while (true)
+        {
+            string? userName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(userName)) return userName;
 
-        answers[0] = 6;
-        answers[1] = 9;
-        answers[2] = 3;
-        answers[3] = 25;
-        answers[4] = 60;
-
-        return answers;
-    }
-
-    private static string[] GetQuestions(int questionCount)
-    {
-        var questions = new string[questionCount];
-
-        questions[0] = "Сколько будет два плюс два умноженное на два?";
-        questions[1] = "Бревно нужно распилить на 10 частей. Сколько нужно сделать распилов?";
-        questions[2] = "Пять свечей горело. Две потухли. Сколько свечей осталось?";
-        questions[3] = "На двух руках 10 пальцев. Сколько пальцев на 5 руках?";
-        questions[4] = "Укол делают каждые полчаса, сколько нужно минут для трёх уколов?";
-
-        return questions;
+            PrintError("ОШИБКА: Имя не может быть пустым. Пожалуйста, введите ваше имя.");
+        }
     }
 
     private static void Shuffle(string[] questions, int[] answers)
@@ -111,6 +121,23 @@ internal static class Program
             (questions[i], questions[j]) = (questions[j], questions[i]);
             (answers[i], answers[j]) = (answers[j], answers[i]);
         }
+    }
+
+    private static string GetDiagnosis(this string[] diagnoses, int questionCount, int rightAnswersCount)
+    {
+        int diagnosisCount = diagnoses.Length;
+
+        if (diagnosisCount == 0)
+            throw new InvalidOperationException("Список диагнозов пуст.");
+
+        rightAnswersCount = Math.Clamp(rightAnswersCount, 0, questionCount);
+
+        double range = (double)(questionCount + 1) / diagnosisCount;
+
+        var index = (int)Math.Floor(rightAnswersCount / range);
+        index = Math.Clamp(index, 0, diagnosisCount - 1);
+
+        return diagnoses[index];
     }
 
     private static bool IsRetryRequested()
@@ -133,6 +160,62 @@ internal static class Program
         }
     }
 
+    private static void SaveResult(string userName, int rightAnswersCount, string diagnosis)
+    {
+        const string filePath = "ResultsHistory.txt";
+        const int nameWidth = 15;
+        const int answersWidth = 20;
+        const int diagnosisWidth = 15;
+
+        string header = $"|{CenterText("Имя", nameWidth)}|" +
+                        $"{CenterText("Правильных ответов", answersWidth)}|" +
+                        $"{CenterText("Диагноз", diagnosisWidth)}|";
+
+        var separator = new string('-', header.Length);
+
+        string resultLine = $"|{CenterText(userName, nameWidth)}|" +
+                            $"{CenterText(rightAnswersCount.ToString(), answersWidth)}|" +
+                            $"{CenterText(diagnosis, diagnosisWidth)}|";
+
+        bool writeHeader = !File.Exists(filePath) ||
+                           new FileInfo(filePath).Length == 0;
+
+        using var writer = new StreamWriter(filePath, true);
+        if (writeHeader)
+        {
+            writer.WriteLine(separator);
+            writer.WriteLine(header);
+            writer.WriteLine(separator);
+        }
+
+        writer.WriteLine(resultLine);
+        writer.WriteLine(separator);
+    }
+
+    private static string CenterText(string text, int width)
+    {
+        if (string.IsNullOrEmpty(text)) text = "";
+        int padding = width - text.Length;
+        int padLeft = padding / 2 + text.Length;
+        return text.PadLeft(padLeft).PadRight(width);
+    }
+
+    private static void ShowResultsHistory()
+    {
+        const string filePath = "ResultsHistory.txt";
+        if (!File.Exists(filePath) || new FileInfo(filePath).Length == 0)
+        {
+            Console.WriteLine("История результатов пуста.");
+            return;
+        }
+
+        using var reader = new StreamReader(filePath);
+        while (reader.ReadLine() is { } line)
+        {
+            Console.WriteLine(line);
+        }
+    }
+
     private static void PrintError(string message)
     {
         var previousColor = Console.ForegroundColor;
@@ -140,14 +223,4 @@ internal static class Program
         Console.WriteLine(message);
         Console.ForegroundColor = previousColor;
     }
-
-    //private static void PrintError(string message,
-    //    ConsoleColor color = ConsoleColor.Red)
-    //{
-    //    var previousColor = Console.ForegroundColor;
-    //    Console.ForegroundColor = ConsoleColor.Red;
-    //    Console.WriteLine(message);
-
-    //    Console.ForegroundColor = previousColor;
-    //}
 }
