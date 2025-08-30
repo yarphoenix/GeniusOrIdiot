@@ -16,4 +16,9 @@ internal class FileProvider
         string value = reader.ReadToEnd();
         return value;
     }
+
+    public static bool Exists(string fileName)
+    {
+        return File.Exists(fileName);
+    }
 }

@@ -41,12 +41,27 @@ internal static class Program
             if (userChoice)
                 ShowUserResults();
 
+            userChoice = GetUserChoice("Хотите добавить новый вопрос?");
+            if (userChoice)
+                AddNewQuestion();
+
             userChoice = GetUserChoice("Хотите начать сначала?");
             if (!userChoice)
                 break;
 
             Console.Clear();
         }
+    }
+
+    private static void AddNewQuestion()
+    {
+        Console.WriteLine("Введите текст вопроса:");
+        string? text = Console.ReadLine();
+        Console.WriteLine("Введите числовой ответ на вопрос:");
+        int answer = GetUserAnswer();
+
+        var question = new Question(text, answer);
+        QuestionsStorage.Add(question);
     }
 
     private static int GetUserAnswer()
