@@ -1,42 +1,21 @@
-﻿using System.Text;
-
-namespace GeniusOrIdiotConsoleApp
+﻿namespace GeniusOrIdiotConsoleApp
 {
     internal class UsersResultStorage
     {
         public static void Save(User user)
         {
             var result = $"{user.Name}#{user.CorrectAnswerCount}#{user.Diagnose}";
-            AppendToFile("UserResults.txt", result);
-        }
-
-        public static int GetUserAnswer()
-        {
-            while (true)
-            {
-                try
-                {
-                    return int.Parse(Console.ReadLine());
-                }
-                catch (FormatException)
-                {
-                    MessagePrinter.Print("ОШИБКА: Пожалуйста, введите числовой ответ.", ConsoleColor.Red);
-                }
-                catch (OverflowException)
-                {
-                    MessagePrinter.Print("ОШИБКА: Введенное число слишком большое или слишком маленькое.", ConsoleColor.Red);
-                }
-            }
+            FileProvider.Append("UserResults.txt", result);
         }
 
         public static List<User> GetUserResults()
         {
-            const string fileName = "UserResults.txt";
+            string value = FileProvider.GetValue("UserResults.txt");
+            string[] lines = value.Split('\n');
 
             var results = new List<User>();
 
-            using var reader = new StreamReader(fileName, Encoding.UTF8);
-            while (reader.ReadLine() is { } line)
+            foreach (string line in lines)
             {
                 string[] values = line.Split('#');
                 string name = values[0];
@@ -53,12 +32,6 @@ namespace GeniusOrIdiotConsoleApp
             }
 
             return results;
-        }
-
-        private static void AppendToFile(string fileName, string value)
-        {
-            using var writer = new StreamWriter(fileName, true, Encoding.UTF8);
-            writer.WriteLine(value);
         }
     }
 }
