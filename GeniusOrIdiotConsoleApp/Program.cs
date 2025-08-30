@@ -4,76 +4,77 @@ internal static class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Показать историю результатов? (да/нет)");
-        if (IsRetryRequested())
-            ShowResultsHistory();
-
-        const int questionCount = 5;
-
-        string[] questions = GetQuestions(questionCount);
-        int[] answers = GetAnswers(questionCount);
-        string[] diagnoses = GetDiagnoses();
-
         while (true)
         {
             Console.WriteLine("Здравствуйте! Как вас зовут?");
-            string userName = GetName();
+            string? userName = Console.ReadLine();
+            var user = new User(userName);
+            var questions = QuestionsStorage.GetAll();
+            int questionCount = questions.Count;
 
-            Shuffle(questions, answers);
-
-            var rightAnswersCount = 0;
+            var random = new Random();
 
             for (var i = 0; i < questionCount; i++)
             {
-                int questionNumber = i + 1;
-
-                Console.WriteLine($"{questionNumber}. {questions[i]}");
+                Console.WriteLine("Вопрос " + (i + 1));
+                int nextQuestionIndex = random.Next(0, questions.Count);
+                Console.WriteLine(questions[nextQuestionIndex].Text);
 
                 int userAnswer = GetUserAnswer();
+                int rightAnswer = questions[nextQuestionIndex].Answer;
 
-                if (userAnswer == answers[i])
-                    rightAnswersCount++;
+                if (userAnswer == rightAnswer)
+                    user.AcceptRightAnswer();
+
+                questions.RemoveAt(nextQuestionIndex);
             }
 
-            Console.WriteLine("Количество правильных ответов: " + rightAnswersCount);
+            Console.WriteLine("Количество правильных ответов: " + user.CorrectAnswerCount);
 
-            string diagnosis = diagnoses.GetDiagnosis(questionCount, rightAnswersCount);
-            Console.WriteLine($"{userName}, Ваш диагноз: {diagnosis}");
+            string diagnose = CalculateDiagnose(questionCount, user.CorrectAnswerCount);
+            user.Diagnose = diagnose;
+            Console.WriteLine($"{user.Name}, Ваш диагноз: {diagnose}");
 
-            SaveResult(userName, rightAnswersCount, diagnosis);
+            UsersResultStorage.Save(user);
 
-            Console.WriteLine("Хотите пройти тест еще раз? (да/нет)");
-            if (!IsRetryRequested())
+            bool userChoice = GetUserChoice("Хотите посмотреть предыдущие результаты игры?");
+            if (userChoice)
+                ShowUserResults();
+
+            userChoice = GetUserChoice("Хотите начать сначала?");
+            if (!userChoice)
                 break;
 
             Console.Clear();
         }
     }
 
-    private static string[] GetQuestions(int questionCount)
+    private static int GetUserAnswer()
     {
-        var questions = new string[questionCount];
-
-        questions[0] = "Сколько будет два плюс два умноженное на два?";
-        questions[1] = "Бревно нужно распилить на 10 частей. Сколько нужно сделать распилов?";
-        questions[2] = "Пять свечей горело. Две потухли. Сколько свечей осталось?";
-        questions[3] = "На двух руках 10 пальцев. Сколько пальцев на 5 руках?";
-        questions[4] = "Укол делают каждые полчаса, сколько нужно минут для трёх уколов?";
-
-        return questions;
+        while (true)
+        {
+            try
+            {
+                return int.Parse(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                MessagePrinter.Print("ОШИБКА: Пожалуйста, введите числовой ответ.", ConsoleColor.Red);
+            }
+            catch (OverflowException)
+            {
+                MessagePrinter.Print("ОШИБКА: Введенное число слишком большое или слишком маленькое.", ConsoleColor.Red);
+            }
+        }
     }
 
-    private static int[] GetAnswers(int questionCount)
+    private static string CalculateDiagnose(int questionCount, int correctAnswersCount)
     {
-        var answers = new int[questionCount];
+        string[] diagnoses = GetDiagnoses();
 
-        answers[0] = 6;
-        answers[1] = 9;
-        answers[2] = 3;
-        answers[3] = 25;
-        answers[4] = 60;
+        int correctAnswersPercent = correctAnswersCount * 100 / questionCount;
 
-        return answers;
+        return diagnoses[correctAnswersPercent / 20];
     }
 
     private static string[] GetDiagnoses()
@@ -91,66 +92,10 @@ internal static class Program
         return diagnosis;
     }
 
-    private static string GetName()
+    private static bool GetUserChoice(string message)
     {
-        while (true)
-        {
-            string? userName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(userName)) return userName;
+        Console.WriteLine(message + " (да/нет)");
 
-            PrintError("ОШИБКА: Имя не может быть пустым. Пожалуйста, введите ваше имя.");
-        }
-    }
-
-    private static int GetUserAnswer()
-    {
-        while (true)
-        {
-            try
-            {
-                return int.Parse(Console.ReadLine());
-            }
-            catch (FormatException)
-            {
-                PrintError("ОШИБКА: Пожалуйста, введите числовой ответ.");
-            }
-            catch (OverflowException)
-            {
-                PrintError("ОШИБКА: Введенное число слишком большое или слишком маленькое.");
-            }
-        }
-    }
-
-    private static void Shuffle(string[] questions, int[] answers)
-    {
-        var random = new Random();
-        for (int i = questions.Length - 1; i > 0; i--)
-        {
-            int j = random.Next(i + 1);
-            (questions[i], questions[j]) = (questions[j], questions[i]);
-            (answers[i], answers[j]) = (answers[j], answers[i]);
-        }
-    }
-
-    private static string GetDiagnosis(this string[] diagnoses, int questionCount, int rightAnswersCount)
-    {
-        int diagnosisCount = diagnoses.Length;
-
-        if (diagnosisCount == 0)
-            throw new InvalidOperationException("Список диагнозов пуст.");
-
-        rightAnswersCount = Math.Clamp(rightAnswersCount, 0, questionCount);
-
-        double range = (double)(questionCount + 1) / diagnosisCount;
-
-        var index = (int)Math.Floor(rightAnswersCount / range);
-        index = Math.Clamp(index, 0, diagnosisCount - 1);
-
-        return diagnoses[index];
-    }
-
-    private static bool IsRetryRequested()
-    {
         while (true)
         {
             string? response = Console.ReadLine();
@@ -165,71 +110,18 @@ internal static class Program
                 return false;
             }
 
-            PrintError("ОШИБКА: Пожалуйста, введите 'да' или 'нет'.");
+            MessagePrinter.Print("ОШИБКА: Пожалуйста, введите 'да' или 'нет'.", ConsoleColor.Red);
         }
     }
 
-    private static void SaveResult(string userName, int rightAnswersCount, string diagnosis)
+    private static void ShowUserResults()
     {
-        const string filePath = "ResultsHistory.txt";
-        const int nameWidth = 15;
-        const int answersWidth = 20;
-        const int diagnosisWidth = 15;
+        Console.WriteLine("{0, -20}{1, 18}{2, 15}", "Имя", "Кол-во правильных ответов", "Диагноз");
 
-        string header = $"|{CenterText("Имя", nameWidth)}|" +
-                        $"{CenterText("Правильных ответов", answersWidth)}|" +
-                        $"{CenterText("Диагноз", diagnosisWidth)}|";
-
-        var separator = new string('-', header.Length);
-
-        string resultLine = $"|{CenterText(userName, nameWidth)}|" +
-                            $"{CenterText(rightAnswersCount.ToString(), answersWidth)}|" +
-                            $"{CenterText(diagnosis, diagnosisWidth)}|";
-
-        bool writeHeader = !File.Exists(filePath) ||
-                           new FileInfo(filePath).Length == 0;
-
-        using var writer = new StreamWriter(filePath, true);
-        if (writeHeader)
+        var results = UsersResultStorage.GetUserResults();
+        foreach (var user in results)
         {
-            writer.WriteLine(separator);
-            writer.WriteLine(header);
-            writer.WriteLine(separator);
+            Console.WriteLine("{0, -20}{1, 18}{2, 15}", user.Name, user.CorrectAnswerCount, user.Diagnose);
         }
-
-        writer.WriteLine(resultLine);
-        writer.WriteLine(separator);
-    }
-
-    private static string CenterText(string text, int width)
-    {
-        if (string.IsNullOrEmpty(text)) text = "";
-        int padding = width - text.Length;
-        int padLeft = padding / 2 + text.Length;
-        return text.PadLeft(padLeft).PadRight(width);
-    }
-
-    private static void ShowResultsHistory()
-    {
-        const string filePath = "ResultsHistory.txt";
-        if (!File.Exists(filePath) || new FileInfo(filePath).Length == 0)
-        {
-            Console.WriteLine("История результатов пуста.");
-            return;
-        }
-
-        using var reader = new StreamReader(filePath);
-        while (reader.ReadLine() is { } line)
-        {
-            Console.WriteLine(line);
-        }
-    }
-
-    private static void PrintError(string message)
-    {
-        var previousColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(message);
-        Console.ForegroundColor = previousColor;
     }
 }
