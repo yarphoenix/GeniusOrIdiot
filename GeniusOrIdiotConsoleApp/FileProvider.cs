@@ -2,7 +2,7 @@
 
 namespace GeniusOrIdiotConsoleApp;
 
-internal class FileProvider
+public static class FileProvider
 {
     public static void Append(string fileName, string value)
     {
@@ -17,8 +17,7 @@ internal class FileProvider
         return value;
     }
 
-    public static bool Exists(string fileName)
-    {
-        return File.Exists(fileName);
-    }
+    public static bool Exists(string fileName) => File.Exists(fileName);
+
+    public static void Clear(string filePath) => File.WriteAllText(filePath, string.Empty);
 }
