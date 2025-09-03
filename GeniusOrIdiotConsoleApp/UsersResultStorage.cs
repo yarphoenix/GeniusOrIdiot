@@ -2,15 +2,17 @@
 
 public static class UsersResultStorage
 {
+    private const string FileName = "UserResults.txt";
+
     public static void Save(User user)
     {
         var result = $"{user.Name}#{user.CorrectAnswerCount}#{user.Diagnose}";
-        FileProvider.Append("UserResults.txt", result);
+        FileProvider.Append(FileName, result);
     }
 
     public static List<User> GetUserResults()
     {
-        string value = FileProvider.GetValue("UserResults.txt");
+        string value = FileProvider.GetValue(FileName);
         string[] lines = value.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
 
         var results = new List<User>();

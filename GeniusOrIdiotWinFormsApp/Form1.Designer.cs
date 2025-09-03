@@ -1,6 +1,6 @@
 ﻿namespace GeniusOrIdiotWinFormsApp;
 
-partial class GeniusOrIdiot
+partial class MainForm
 {
     /// <summary>
     ///  Required designer variable.
@@ -41,7 +41,7 @@ partial class GeniusOrIdiot
         nextButton.Location = new Point(0, 159);
         nextButton.Margin = new Padding(4, 3, 4, 3);
         nextButton.Name = "nextButton";
-        nextButton.Size = new Size(545, 81);
+        nextButton.Size = new Size(606, 81);
         nextButton.TabIndex = 0;
         nextButton.Text = "ДАЛЕЕ";
         nextButton.UseVisualStyleBackColor = true;
@@ -53,7 +53,7 @@ partial class GeniusOrIdiot
         questionNumberLabel.Font = new Font("Cambria", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
         questionNumberLabel.Location = new Point(50, 52);
         questionNumberLabel.Name = "questionNumberLabel";
-        questionNumberLabel.Size = new Size(99, 20);
+        questionNumberLabel.Size = new Size(81, 16);
         questionNumberLabel.TabIndex = 1;
         questionNumberLabel.Text = "Вопрос № 1";
         questionNumberLabel.Click += questionNumberLabel_Click;
@@ -64,7 +64,7 @@ partial class GeniusOrIdiot
         questionTextLabel.Font = new Font("Cambria", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 204);
         questionTextLabel.Location = new Point(50, 72);
         questionTextLabel.Name = "questionTextLabel";
-        questionTextLabel.Size = new Size(131, 21);
+        questionTextLabel.Size = new Size(108, 17);
         questionTextLabel.TabIndex = 2;
         questionTextLabel.Text = "Текст вопроса:";
         questionTextLabel.Click += questionTextLabel_Click;
@@ -73,21 +73,21 @@ partial class GeniusOrIdiot
         // 
         userAnswerTextBox.Location = new Point(56, 96);
         userAnswerTextBox.Name = "userAnswerTextBox";
-        userAnswerTextBox.Size = new Size(413, 25);
+        userAnswerTextBox.Size = new Size(413, 22);
         userAnswerTextBox.TabIndex = 3;
         userAnswerTextBox.TextChanged += userAnswerTextBox_TextChanged;
         // 
-        // GeniusOrIdiot
+        // mainForm
         // 
-        AutoScaleDimensions = new SizeF(8F, 17F);
+        AutoScaleDimensions = new SizeF(7F, 14F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(545, 240);
+        ClientSize = new Size(606, 240);
         Controls.Add(userAnswerTextBox);
         Controls.Add(questionTextLabel);
         Controls.Add(questionNumberLabel);
         Controls.Add(nextButton);
         Font = new Font("Cambria", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        Name = "GeniusOrIdiot";
+        Name = "MainForm";
         Text = "Гений или Идиот";
         Load += GeniusOrIdiot_Load;
         ResumeLayout(false);

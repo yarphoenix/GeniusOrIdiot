@@ -1,6 +1,6 @@
 ﻿namespace GeniusOrIdiotConsoleApp;
 
-public class User(string name)
+public class User(string name = "Неизвестно")
 {
     public string Name { get; } = name;
     public int CorrectAnswerCount { get; set; }
