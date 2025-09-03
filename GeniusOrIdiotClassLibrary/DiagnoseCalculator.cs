@@ -1,4 +1,4 @@
-﻿namespace GeniusOrIdiotConsoleApp;
+﻿namespace GeniusOrIdiotClassLibrary;
 
 public static class DiagnoseCalculator
 {

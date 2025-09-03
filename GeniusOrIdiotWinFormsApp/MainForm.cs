@@ -1,4 +1,4 @@
-using GeniusOrIdiotConsoleApp;
+using GeniusOrIdiotClassLibrary;
 
 namespace GeniusOrIdiotWinFormsApp
 {

@@ -1,4 +1,4 @@
-﻿namespace GeniusOrIdiotConsoleApp;
+﻿namespace GeniusOrIdiotClassLibrary;
 
 public class User(string name = "Неизвестно")
 {
