@@ -56,7 +56,6 @@ partial class MainForm
         questionNumberLabel.Size = new Size(81, 16);
         questionNumberLabel.TabIndex = 1;
         questionNumberLabel.Text = "Вопрос № 1";
-        questionNumberLabel.Click += questionNumberLabel_Click;
         // 
         // questionTextLabel
         // 
@@ -67,7 +66,6 @@ partial class MainForm
         questionTextLabel.Size = new Size(108, 17);
         questionTextLabel.TabIndex = 2;
         questionTextLabel.Text = "Текст вопроса:";
-        questionTextLabel.Click += questionTextLabel_Click;
         // 
         // userAnswerTextBox
         // 
@@ -75,7 +73,6 @@ partial class MainForm
         userAnswerTextBox.Name = "userAnswerTextBox";
         userAnswerTextBox.Size = new Size(413, 22);
         userAnswerTextBox.TabIndex = 3;
-        userAnswerTextBox.TextChanged += userAnswerTextBox_TextChanged;
         // 
         // mainForm
         // 
@@ -89,7 +86,7 @@ partial class MainForm
         Font = new Font("Cambria", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
         Name = "MainForm";
         Text = "Гений или Идиот";
-        Load += GeniusOrIdiot_Load;
+        Load += MainForm_Load;
         ResumeLayout(false);
         PerformLayout();
     }

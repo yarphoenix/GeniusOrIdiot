@@ -10,17 +10,21 @@ namespace GeniusOrIdiotWinFormsApp
         private int _questionCount;
         private User _user;
 
+
         public MainForm()
         {
             InitializeComponent();
         }
 
-        private void GeniusOrIdiot_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
+            var welcomeForm = new WelcomeForm();
+            welcomeForm.ShowDialog();
+
+            _user = new User(welcomeForm.userNameInputTextBox.Text);
+
             _questions = QuestionsStorage.GetAll();
             _questionCount = _questions.Count;
-            _currentQuestionNumber = 0;
-            _user = new User();
 
             ShowNextQuestion();
         }
@@ -38,21 +42,6 @@ namespace GeniusOrIdiotWinFormsApp
             questionNumberLabel.Text = "Вопрос № " + _currentQuestionNumber;
         }
 
-        private void questionNumberLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void questionTextLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void userAnswerTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void nextButton_Click(object sender, EventArgs e)
         {
             var userAnswer = Convert.ToInt32(userAnswerTextBox.Text);
@@ -67,6 +56,9 @@ namespace GeniusOrIdiotWinFormsApp
             if (endGame)
             {
                 _user.Diagnose = DiagnoseCalculator.Calculate(_questionCount, _user);
+
+                UsersResultStorage.Save(_user);
+
                 MessageBox.Show(_user.Diagnose);
             }
 
