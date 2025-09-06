@@ -32,6 +32,12 @@ partial class MainForm
         questionNumberLabel = new Label();
         questionTextLabel = new Label();
         userAnswerTextBox = new TextBox();
+        menuStrip = new MenuStrip();
+        ActionsStripMenuItem = new ToolStripMenuItem();
+        ShowResultsToolMenuItem = new ToolStripMenuItem();
+        RestartToolMenuItem = new ToolStripMenuItem();
+        QuitToolStripMenuItem = new ToolStripMenuItem();
+        menuStrip.SuspendLayout();
         SuspendLayout();
         // 
         // nextButton
@@ -74,7 +80,45 @@ partial class MainForm
         userAnswerTextBox.Size = new Size(413, 22);
         userAnswerTextBox.TabIndex = 3;
         // 
-        // mainForm
+        // menuStrip
+        // 
+        menuStrip.Items.AddRange(new ToolStripItem[] { ActionsStripMenuItem });
+        menuStrip.Location = new Point(0, 0);
+        menuStrip.Name = "menuStrip";
+        menuStrip.Size = new Size(606, 24);
+        menuStrip.TabIndex = 4;
+        menuStrip.Text = "menuStrip";
+        // 
+        // ActionsStripMenuItem
+        // 
+        ActionsStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ShowResultsToolMenuItem, RestartToolMenuItem, QuitToolStripMenuItem });
+        ActionsStripMenuItem.Font = new Font("Cambria", 9F);
+        ActionsStripMenuItem.Name = "ActionsStripMenuItem";
+        ActionsStripMenuItem.Size = new Size(70, 20);
+        ActionsStripMenuItem.Text = "Действия";
+        // 
+        // ShowResultsToolMenuItem
+        // 
+        ShowResultsToolMenuItem.Name = "ShowResultsToolMenuItem";
+        ShowResultsToolMenuItem.Size = new Size(281, 22);
+        ShowResultsToolMenuItem.Text = "Посмотреть предыдущие результаты";
+        ShowResultsToolMenuItem.Click += ShowResultsToolMenuItem_Click;
+        // 
+        // RestartToolMenuItem
+        // 
+        RestartToolMenuItem.Name = "RestartToolMenuItem";
+        RestartToolMenuItem.Size = new Size(281, 22);
+        RestartToolMenuItem.Text = "Перезапустить";
+        RestartToolMenuItem.Click += RestartToolMenuItem_Click;
+        // 
+        // QuitToolStripMenuItem
+        // 
+        QuitToolStripMenuItem.Name = "QuitToolStripMenuItem";
+        QuitToolStripMenuItem.Size = new Size(281, 22);
+        QuitToolStripMenuItem.Text = "Выйти";
+        QuitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
+        // 
+        // MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 14F);
         AutoScaleMode = AutoScaleMode.Font;
@@ -83,10 +127,14 @@ partial class MainForm
         Controls.Add(questionTextLabel);
         Controls.Add(questionNumberLabel);
         Controls.Add(nextButton);
+        Controls.Add(menuStrip);
         Font = new Font("Cambria", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        MainMenuStrip = menuStrip;
         Name = "MainForm";
         Text = "Гений или Идиот";
         Load += MainForm_Load;
+        menuStrip.ResumeLayout(false);
+        menuStrip.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -97,4 +145,9 @@ partial class MainForm
     private Label questionNumberLabel;
     private Label questionTextLabel;
     private TextBox userAnswerTextBox;
+    private MenuStrip menuStrip;
+    private ToolStripMenuItem ActionsStripMenuItem;
+    private ToolStripMenuItem ShowResultsToolMenuItem;
+    private ToolStripMenuItem RestartToolMenuItem;
+    private ToolStripMenuItem QuitToolStripMenuItem;
 }

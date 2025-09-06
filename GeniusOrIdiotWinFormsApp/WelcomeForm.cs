@@ -1,15 +1,14 @@
-﻿namespace GeniusOrIdiotWinFormsApp
-{
-    public partial class WelcomeForm : Form
-    {
-        public WelcomeForm()
-        {
-            InitializeComponent();
-        }
+﻿namespace GeniusOrIdiotWinFormsApp;
 
-        private void startButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+public partial class WelcomeForm : Form
+{
+    public WelcomeForm()
+    {
+        InitializeComponent();
+    }
+
+    private void startButton_Click(object sender, EventArgs e)
+    {
+        Close();
     }
 }
