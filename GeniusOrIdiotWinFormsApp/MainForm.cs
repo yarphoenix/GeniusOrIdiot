@@ -4,15 +4,12 @@ namespace GeniusOrIdiotWinFormsApp;
 
 public partial class MainForm : Form
 {
-    private List<Question> _questions;
-    private Question _currentQuestion;
-    private int _currentQuestionNumber;
-    private int _questionCount;
-    private User _user;
+    private Game _game;
 
     public MainForm()
     {
         InitializeComponent();
+        errorLabel.Visible = false;
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -20,48 +17,43 @@ public partial class MainForm : Form
         var welcomeForm = new WelcomeForm();
         welcomeForm.ShowDialog();
 
-        _user = new User(welcomeForm.userNameInputTextBox.Text);
+        var user = new User(welcomeForm.userNameInputTextBox.Text);
+        _game = new Game(user);
 
-        _questions = QuestionsStorage.GetAll();
-        _questionCount = _questions.Count;
 
         ShowNextQuestion();
     }
 
     private void ShowNextQuestion()
     {
-        var random = new Random();
-        int nextQuestionIndex = random.Next(0, _questions.Count);
+        var currentQuestion = _game.GetNextQuestion();
 
-        _currentQuestion = _questions[nextQuestionIndex];
+        questionTextLabel.Text = currentQuestion.Text;
 
-        questionTextLabel.Text = _currentQuestion.Text;
-
-        _currentQuestionNumber++;
-        questionNumberLabel.Text = "Вопрос № " + _currentQuestionNumber;
+        string questionNumber = _game.GetQuestionNumberText();
+        questionNumberLabel.Text = "Вопрос № " + questionNumber;
     }
 
     private void nextButton_Click(object sender, EventArgs e)
     {
-        var userAnswer = Convert.ToInt32(userAnswerTextBox.Text);
-        int rightAnswer = _currentQuestion.Answer;
-        if (userAnswer == rightAnswer)
+        bool parsed = InputValidator.TryParseToNumber(userAnswerTextBox.Text, out int userAnswer, out string error);
+        if (!parsed)
         {
-            _user.AcceptRightAnswer();
+            errorLabel.Visible = true;
+            errorLabel.Text = error;
+            return;
         }
-        _questions.Remove(_currentQuestion);
 
-        bool endGame = _questions.Count == 0;
-        if (endGame)
+        _game.AcceptAnswer(userAnswer);
+
+        if (_game.IsEnd())
         {
-            _user.Diagnose = DiagnoseCalculator.Calculate(_questionCount, _user);
-
-            UsersResultStorage.Save(_user);
-
-            MessageBox.Show(_user.Diagnose);
+            string diagnose = _game.GetDiagnose();
+            MessageBox.Show(diagnose);
         }
 
         ShowNextQuestion();
+        userAnswerTextBox.Clear();
     }
 
     private void ShowResultsToolMenuItem_Click(object sender, EventArgs e)
@@ -78,5 +70,15 @@ public partial class MainForm : Form
     private void QuitToolStripMenuItem_Click(object sender, EventArgs e)
     {
         Application.Exit();
+    }
+
+    private void userAnswerTextBox_TextChanged(object sender, EventArgs e)
+    {
+        errorLabel.Visible = false;
+    }
+
+    private void userAnswerTextBox_Click(object sender, EventArgs e)
+    {
+        userAnswerTextBox.Clear();
     }
 }
