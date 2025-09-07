@@ -56,28 +56,12 @@ internal static class Program
         {
             Console.WriteLine(i + 1 + ": " + questions[i].Text);
         }
+
         int index = GetUserAnswer();
         while (index < 1 || index > questions.Count)
         {
-            MessagePrinter.Print("ОШИБКА: Некорректный индекс вопроса. Пожалуйста, попробуйте снова.", ConsoleColor.Red);
-            index = GetUserAnswer();
-        }
-
-        QuestionsStorage.Remove(questions[index + 1]);
-    }
-
-    private static void RemoveQuestion()
-    {
-        var questions = QuestionsStorage.GetAll();
-        Console.WriteLine("Введите индекс вопроса для удаления (от 1 до " + questions.Count + "):");
-        for (var i = 0; i < questions.Count; i++)
-        {
-            Console.WriteLine(i + 1 + ": " + questions[i].Text);
-        }
-        int index = GetUserAnswer();
-        while (index < 1 || index > questions.Count)
-        {
-            MessagePrinter.Print("ОШИБКА: Некорректный индекс вопроса. Пожалуйста, попробуйте снова.", ConsoleColor.Red);
+            MessagePrinter.Print("ОШИБКА: Некорректный индекс вопроса. Пожалуйста, попробуйте снова.",
+                ConsoleColor.Red);
             index = GetUserAnswer();
         }
 
