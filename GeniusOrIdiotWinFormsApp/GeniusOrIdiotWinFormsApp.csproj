@@ -9,6 +9,6 @@
 		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\GeniusOrIdiotConsoleApp\GeniusOrIdiotConsoleApp.csproj" />
+	  <ProjectReference Include="..\GeniusOrIdiotClassLibrary\GeniusOrIdiotClassLibrary.csproj" />
 	</ItemGroup>
 </Project>

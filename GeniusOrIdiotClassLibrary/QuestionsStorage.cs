@@ -1,14 +1,16 @@
-﻿namespace GeniusOrIdiotConsoleApp;
+﻿namespace GeniusOrIdiotClassLibrary;
 
 public static class QuestionsStorage
 {
+    private const string FileName = "Questions.txt";
+
     public static List<Question> GetAll()
     {
         var questions = new List<Question>();
 
-        if (FileProvider.Exists("Questions.txt"))
+        if (FileProvider.Exists(FileName))
         {
-            string value = FileProvider.GetValue("Questions.txt");
+            string value = FileProvider.GetValue(FileName);
             string[] lines = value.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
             foreach (string line in lines)
             {
@@ -36,7 +38,7 @@ public static class QuestionsStorage
     public static void Add(Question newQuestion)
     {
         var value = $"{newQuestion.Text}#{newQuestion.Answer}";
-        FileProvider.Append("Questions.txt", value);
+        FileProvider.Append(FileName, value);
     }
 
     public static void Remove(Question question)
@@ -50,7 +52,7 @@ public static class QuestionsStorage
                 break;
             }
         }
-        FileProvider.Clear("Questions.txt");
+        FileProvider.Clear(FileName);
         SaveQuestions(questions);
     }
 

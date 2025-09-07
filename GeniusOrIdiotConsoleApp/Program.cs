@@ -1,4 +1,6 @@
-﻿namespace GeniusOrIdiotConsoleApp;
+﻿using GeniusOrIdiotClassLibrary;
+
+namespace GeniusOrIdiotConsoleApp;
 
 internal static class Program
 {
