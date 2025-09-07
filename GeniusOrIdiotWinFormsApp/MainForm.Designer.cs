@@ -37,6 +37,7 @@ partial class MainForm
         ShowResultsToolMenuItem = new ToolStripMenuItem();
         RestartToolMenuItem = new ToolStripMenuItem();
         QuitToolStripMenuItem = new ToolStripMenuItem();
+        errorLabel = new Label();
         menuStrip.SuspendLayout();
         SuspendLayout();
         // 
@@ -79,6 +80,8 @@ partial class MainForm
         userAnswerTextBox.Name = "userAnswerTextBox";
         userAnswerTextBox.Size = new Size(413, 22);
         userAnswerTextBox.TabIndex = 3;
+        userAnswerTextBox.TextChanged += userAnswerTextBox_TextChanged;
+        userAnswerTextBox.Click += userAnswerTextBox_Click;
         // 
         // menuStrip
         // 
@@ -118,11 +121,22 @@ partial class MainForm
         QuitToolStripMenuItem.Text = "Выйти";
         QuitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
         // 
+        // errorLabel
+        // 
+        errorLabel.AutoSize = true;
+        errorLabel.ForeColor = Color.DarkRed;
+        errorLabel.Location = new Point(56, 121);
+        errorLabel.Name = "errorLabel";
+        errorLabel.Size = new Size(51, 14);
+        errorLabel.TabIndex = 5;
+        errorLabel.Text = "Ошибка";
+        // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 14F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(606, 240);
+        Controls.Add(errorLabel);
         Controls.Add(userAnswerTextBox);
         Controls.Add(questionTextLabel);
         Controls.Add(questionNumberLabel);
@@ -150,4 +164,5 @@ partial class MainForm
     private ToolStripMenuItem ShowResultsToolMenuItem;
     private ToolStripMenuItem RestartToolMenuItem;
     private ToolStripMenuItem QuitToolStripMenuItem;
+    private Label errorLabel;
 }

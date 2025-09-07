@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             resultsGridView = new DataGridView();
             userNameColumn = new DataGridViewTextBoxColumn();
             correctAnswersCountColumn = new DataGridViewTextBoxColumn();
@@ -38,14 +38,14 @@
             // 
             // resultsGridView
             // 
-            dataGridViewCellStyle2.Font = new Font("Cambria Math", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            resultsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Font = new Font("Cambria Math", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            resultsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             resultsGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resultsGridView.Columns.AddRange(new DataGridViewColumn[] { userNameColumn, correctAnswersCountColumn, DiagnoseColumn });
             resultsGridView.Dock = DockStyle.Fill;
             resultsGridView.Location = new Point(0, 0);
             resultsGridView.Name = "resultsGridView";
-            resultsGridView.Size = new Size(375, 225);
+            resultsGridView.Size = new Size(375, 440);
             resultsGridView.TabIndex = 0;
             // 
             // userNameColumn
@@ -67,7 +67,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(375, 225);
+            ClientSize = new Size(375, 440);
             Controls.Add(resultsGridView);
             Name = "ResultsForm";
             Text = "Результаты";

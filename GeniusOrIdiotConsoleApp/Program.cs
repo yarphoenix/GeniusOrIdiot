@@ -11,33 +11,22 @@ internal static class Program
             Console.WriteLine("Здравствуйте! Как вас зовут?");
             string? userName = Console.ReadLine();
             var user = new User(userName);
-            var questions = QuestionsStorage.GetAll();
-            int questionCount = questions.Count;
+            var game = new Game(user);
 
-            var random = new Random();
-
-            for (var i = 0; i < questionCount; i++)
+            while (!game.IsEnd())
             {
-                Console.WriteLine("Вопрос " + (i + 1));
-                int nextQuestionIndex = random.Next(0, questions.Count);
-                Console.WriteLine(questions[nextQuestionIndex].Text);
+                var currentQuestion = game.GetNextQuestion();
+                string questionNumber = game.GetQuestionNumberText();
+                Console.WriteLine("Вопрос " + questionNumber);
+                Console.WriteLine(currentQuestion.Text);
 
                 int userAnswer = GetUserAnswer();
-                int rightAnswer = questions[nextQuestionIndex].Answer;
 
-                if (userAnswer == rightAnswer)
-                    user.AcceptRightAnswer();
-
-                questions.RemoveAt(nextQuestionIndex);
+                game.AcceptAnswer(userAnswer);
             }
 
-            Console.WriteLine("Количество правильных ответов: " + user.CorrectAnswerCount);
-
-            string diagnose = DiagnoseCalculator.Calculate(questionCount, user);
-            user.Diagnose = diagnose;
-            Console.WriteLine($"{user.Name}, Ваш диагноз: {diagnose}");
-
-            UsersResultStorage.Save(user);
+            string diagnose = game.GetDiagnose();
+            Console.WriteLine($"{userName}, ваш диагноз: {diagnose}");
 
             bool userChoice = GetUserChoice("Хотите посмотреть предыдущие результаты игры?");
             if (userChoice)
@@ -90,21 +79,13 @@ internal static class Program
 
     private static int GetUserAnswer()
     {
-        while (true)
+        int number;
+        while (!InputValidator.TryParseToNumber(Console.ReadLine(), out number, out string errorMessage))
         {
-            try
-            {
-                return int.Parse(Console.ReadLine());
-            }
-            catch (FormatException)
-            {
-                MessagePrinter.Print("ОШИБКА: Пожалуйста, введите числовой ответ.", ConsoleColor.Red);
-            }
-            catch (OverflowException)
-            {
-                MessagePrinter.Print("ОШИБКА: Введенное число слишком большое или слишком маленькое.", ConsoleColor.Red);
-            }
+            MessagePrinter.Print(errorMessage, ConsoleColor.Red);
         }
+
+        return number;
     }
 
     private static bool GetUserChoice(string message)
