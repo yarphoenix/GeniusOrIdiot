@@ -1,8 +1,10 @@
-﻿namespace GeniusOrIdiotClassLibrary;
+﻿using Newtonsoft.Json;
+
+namespace GeniusOrIdiotClassLibrary;
 
 public static class QuestionsStorage
 {
-    private const string FileName = "Questions.txt";
+    private const string FileName = "Questions.json";
 
     public static List<Question> GetAll()
     {
@@ -10,16 +12,17 @@ public static class QuestionsStorage
 
         if (FileProvider.Exists(FileName))
         {
-            string value = FileProvider.Get(FileName);
-            string[] lines = value.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
-            foreach (string line in lines)
-            {
-                string[] parts = line.Split('#');
-                string text = parts[0];
-                int answer = int.Parse(parts[1]);
+            string fileData = FileProvider.Get(FileName);
 
-                var question = new Question(text, answer);
-                questions.Add(question);
+            try
+            {
+                var questionsFromFile = JsonConvert.DeserializeObject<List<Question>>(fileData);
+                if (questionsFromFile is not null)
+                    questions = questionsFromFile;
+            }
+            catch (JsonException)
+            {
+                questions = [];
             }
         }
         else
@@ -37,8 +40,9 @@ public static class QuestionsStorage
 
     public static void Add(Question newQuestion)
     {
-        var value = $"{newQuestion.Text}#{newQuestion.Answer}";
-        FileProvider.Append(FileName, value);
+        var questions = GetAll();
+        questions.Add(newQuestion);
+        SaveQuestions(questions);
     }
 
     public static void Remove(Question question)
@@ -52,15 +56,13 @@ public static class QuestionsStorage
                 break;
             }
         }
-        FileProvider.Clear(FileName);
+
         SaveQuestions(questions);
     }
 
     private static void SaveQuestions(List<Question> questions)
     {
-        foreach (var question in questions)
-        {
-            Add(question);
-        }
+        string json = JsonConvert.SerializeObject(questions, Formatting.Indented);
+        FileProvider.Replace(FileName, json);
     }
 }
