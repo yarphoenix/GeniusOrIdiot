@@ -63,7 +63,7 @@ internal static class Program
             index = GetUserAnswer();
         }
 
-        QuestionsStorage.Remove(questions[index + 1]);
+        QuestionsStorage.Remove(questions[index - 1]);
     }
 
     private static void AddNewQuestion()
