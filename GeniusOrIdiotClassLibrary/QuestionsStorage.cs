@@ -10,7 +10,7 @@ public static class QuestionsStorage
 
         if (FileProvider.Exists(FileName))
         {
-            string value = FileProvider.GetValue(FileName);
+            string value = FileProvider.Get(FileName);
             string[] lines = value.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
             foreach (string line in lines)
             {

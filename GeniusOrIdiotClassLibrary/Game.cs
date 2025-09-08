@@ -56,6 +56,6 @@ public class Game
     {
         _user.Diagnose = DiagnoseCalculator.Calculate(_questionCount, _user);
 
-        UsersResultStorage.Save(_user);
+        UsersResultStorage.Append(_user);
     }
 }
