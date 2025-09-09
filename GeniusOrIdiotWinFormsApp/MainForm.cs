@@ -81,4 +81,10 @@ public partial class MainForm : Form
     {
         userAnswerTextBox.Clear();
     }
+
+    private void QuestionManagerToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var questionManager = new QuestionsManagerForm();
+        questionManager.ShowDialog();
+    }
 }

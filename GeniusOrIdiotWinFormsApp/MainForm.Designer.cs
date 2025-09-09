@@ -38,6 +38,7 @@ partial class MainForm
         RestartToolMenuItem = new ToolStripMenuItem();
         QuitToolStripMenuItem = new ToolStripMenuItem();
         errorLabel = new Label();
+        QuestionManagerToolStripMenuItem = new ToolStripMenuItem();
         menuStrip.SuspendLayout();
         SuspendLayout();
         // 
@@ -80,12 +81,12 @@ partial class MainForm
         userAnswerTextBox.Name = "userAnswerTextBox";
         userAnswerTextBox.Size = new Size(413, 22);
         userAnswerTextBox.TabIndex = 3;
-        userAnswerTextBox.TextChanged += userAnswerTextBox_TextChanged;
         userAnswerTextBox.Click += userAnswerTextBox_Click;
+        userAnswerTextBox.TextChanged += userAnswerTextBox_TextChanged;
         // 
         // menuStrip
         // 
-        menuStrip.Items.AddRange(new ToolStripItem[] { ActionsStripMenuItem });
+        menuStrip.Items.AddRange(new ToolStripItem[] { ActionsStripMenuItem, QuestionManagerToolStripMenuItem });
         menuStrip.Location = new Point(0, 0);
         menuStrip.Name = "menuStrip";
         menuStrip.Size = new Size(606, 24);
@@ -131,6 +132,14 @@ partial class MainForm
         errorLabel.TabIndex = 5;
         errorLabel.Text = "Ошибка";
         // 
+        // QuestionManagerToolStripMenuItem
+        // 
+        QuestionManagerToolStripMenuItem.Font = new Font("Cambria", 9F);
+        QuestionManagerToolStripMenuItem.Name = "QuestionManagerToolStripMenuItem";
+        QuestionManagerToolStripMenuItem.Size = new Size(129, 20);
+        QuestionManagerToolStripMenuItem.Text = "Менеджер вопросов";
+        QuestionManagerToolStripMenuItem.Click += QuestionManagerToolStripMenuItem_Click;
+        // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 14F);
@@ -165,4 +174,5 @@ partial class MainForm
     private ToolStripMenuItem RestartToolMenuItem;
     private ToolStripMenuItem QuitToolStripMenuItem;
     private Label errorLabel;
+    private ToolStripMenuItem QuestionManagerToolStripMenuItem;
 }
