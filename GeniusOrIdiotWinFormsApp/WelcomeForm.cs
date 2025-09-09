@@ -10,7 +10,7 @@ public partial class WelcomeForm : Form
     private void startButton_Click(object sender, EventArgs e)
     {
         Hide();
-        var main = new MainForm();
+        var main = new GameForm();
         main.Closed += (s, args) => Close();
         main.Show();
     }

@@ -1,6 +1,6 @@
 ﻿namespace GeniusOrIdiotWinFormsApp;
 
-partial class MainForm
+partial class GameForm
 {
     /// <summary>
     ///  Required designer variable.
@@ -151,7 +151,7 @@ partial class MainForm
         Font = new Font("Cambria", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
         MainMenuStrip = menuStrip;
         MaximizeBox = false;
-        Name = "MainForm";
+        Name = "GameForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Гений или Идиот";
         Load += MainForm_Load;
