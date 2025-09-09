@@ -113,6 +113,7 @@
             AddQuestionButton.TabIndex = 3;
             AddQuestionButton.Text = "Добавить";
             AddQuestionButton.UseVisualStyleBackColor = true;
+            AddQuestionButton.Click += AddQuestionButton_Click;
             // 
             // AnswerLabel
             // 

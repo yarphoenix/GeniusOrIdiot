@@ -18,6 +18,21 @@ namespace GeniusOrIdiotWinFormsApp
             }
         }
 
+        private void AddQuestionButton_Click(object sender, EventArgs e)
+        {
+            if (!TryValidateQuestionInput(out string questionText, out int questionAnswer, out string errorMessage))
+            {
+                MessageBox.Show(errorMessage, @"Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var question = new Question(questionText, questionAnswer);
+
+            QuestionsStorage.Add(question);
+            QuestionsGridView.Rows.Add(question.Text, question.Answer);
+            ShowOperationSuccess("Вопрос успешно добавлен!");
+        }
+
         private void DeleteQuestionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (QuestionsGridView.CurrentRow == null)
@@ -32,8 +47,34 @@ namespace GeniusOrIdiotWinFormsApp
                 return;
 
             QuestionsStorage.Remove(question);
-
             QuestionsGridView.Rows.Remove(QuestionsGridView.CurrentRow);
+            ShowOperationSuccess("Вопрос успешно удалён!");
+        }
+
+        private bool TryValidateQuestionInput(out string questionText, out int questionAnswer, out string errorMessage)
+        {
+            questionText = QuestionTextBox.Text;
+            errorMessage = string.Empty;
+            questionAnswer = 0;
+
+            if (questionText.Length == 0)
+            {
+                errorMessage = "Введите текст вопроса.";
+                return false;
+            }
+
+            if (AnswerTextBox.TextLength == 0)
+            {
+                errorMessage = "Введите числовой ответ на вопрос.";
+                return false;
+            }
+
+            if (!InputValidator.TryParseToNumber(AnswerTextBox.Text, out questionAnswer, out errorMessage))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static bool ConfirmDeleteQuestion(Question question)
@@ -47,6 +88,16 @@ namespace GeniusOrIdiotWinFormsApp
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question
             ) == DialogResult.Yes;
+        }
+
+        private static void ShowOperationSuccess(string message)
+        {
+            MessageBox.Show(
+                message,
+                @"Операция выполнена",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
     }
 }
