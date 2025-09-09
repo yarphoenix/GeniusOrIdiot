@@ -18,25 +18,6 @@ namespace GeniusOrIdiotWinFormsApp
             }
         }
 
-        //private void QuestionsGridView_CellContextMenuStripNeeded(object sender, DataGridViewCellContextMenuStripNeededEventArgs e)
-        //{
-        //    if (e is { RowIndex: >= 0, ColumnIndex: >= 0 })
-        //    {
-        //        e.ContextMenuStrip = DeleteQuestionMenuStrip; // привязываем меню только к ячейкам
-        //    }
-        //}
-        private void QuestionsGridView_CellMouseDown(object? sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e is { Button: MouseButtons.Right } and { RowIndex: >= 0 } and { ColumnIndex: >= 0 })
-            {
-                // Делаем текущей выбранной ячейку, по которой кликнули
-                QuestionsGridView.CurrentCell = QuestionsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-                // Показываем контекстное меню
-                DeleteQuestionMenuStrip.Show(Cursor.Position);
-            }
-        }
-
         private void DeleteQuestionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (QuestionsGridView.CurrentRow == null)

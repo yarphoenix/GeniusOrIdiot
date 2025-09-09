@@ -60,7 +60,6 @@
             QuestionsGridView.ReadOnly = true;
             QuestionsGridView.Size = new Size(623, 230);
             QuestionsGridView.TabIndex = 0;
-            QuestionsGridView.CellMouseDown += QuestionsGridView_CellMouseDown;
             // 
             // QuestionTextColumn
             // 
