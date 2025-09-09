@@ -14,12 +14,8 @@ public partial class MainForm : Form
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-        var welcomeForm = new WelcomeForm();
-        welcomeForm.ShowDialog();
-
-        var user = new User(welcomeForm.userNameInputTextBox.Text);
+        var user = new User(WelcomeForm.userNameInputTextBox.Text);
         _game = new Game(user);
-
 
         ShowNextQuestion();
     }
@@ -80,11 +76,5 @@ public partial class MainForm : Form
     private void userAnswerTextBox_Click(object sender, EventArgs e)
     {
         userAnswerTextBox.Clear();
-    }
-
-    private void QuestionManagerToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        var questionManager = new QuestionsManagerForm();
-        questionManager.ShowDialog();
     }
 }
