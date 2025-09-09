@@ -132,14 +132,6 @@ partial class MainForm
         errorLabel.TabIndex = 5;
         errorLabel.Text = "Ошибка";
         // 
-        // QuestionManagerToolStripMenuItem
-        // 
-        QuestionManagerToolStripMenuItem.Font = new Font("Cambria", 9F);
-        QuestionManagerToolStripMenuItem.Name = "QuestionManagerToolStripMenuItem";
-        QuestionManagerToolStripMenuItem.Size = new Size(129, 20);
-        QuestionManagerToolStripMenuItem.Text = "Менеджер вопросов";
-        QuestionManagerToolStripMenuItem.Click += QuestionManagerToolStripMenuItem_Click;
-        // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 14F);

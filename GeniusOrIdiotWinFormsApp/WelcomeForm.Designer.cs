@@ -35,6 +35,7 @@ partial class WelcomeForm
         startButton = new Button();
         pictureBox1 = new PictureBox();
         idiotPictureBox = new PictureBox();
+        QuestionManagerButton = new Button();
         ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
         ((System.ComponentModel.ISupportInitialize)idiotPictureBox).BeginInit();
         SuspendLayout();
@@ -43,7 +44,7 @@ partial class WelcomeForm
         // 
         welcomeLabel.AutoSize = true;
         welcomeLabel.Font = new Font("Cambria", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        welcomeLabel.Location = new Point(187, 38);
+        welcomeLabel.Location = new Point(190, 38);
         welcomeLabel.Name = "welcomeLabel";
         welcomeLabel.Size = new Size(155, 17);
         welcomeLabel.TabIndex = 0;
@@ -53,7 +54,7 @@ partial class WelcomeForm
         // 
         gameNameLabel.AutoSize = true;
         gameNameLabel.Font = new Font("Cambria", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
-        gameNameLabel.Location = new Point(137, 54);
+        gameNameLabel.Location = new Point(140, 54);
         gameNameLabel.Name = "gameNameLabel";
         gameNameLabel.Size = new Size(238, 28);
         gameNameLabel.TabIndex = 1;
@@ -63,7 +64,7 @@ partial class WelcomeForm
         // 
         label1.AutoSize = true;
         label1.Font = new Font("Cambria", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        label1.Location = new Point(196, 91);
+        label1.Location = new Point(199, 91);
         label1.Name = "label1";
         label1.Size = new Size(122, 16);
         label1.TabIndex = 2;
@@ -72,7 +73,7 @@ partial class WelcomeForm
         // userNameInputTextBox
         // 
         userNameInputTextBox.Font = new Font("Cambria", 9F);
-        userNameInputTextBox.Location = new Point(154, 108);
+        userNameInputTextBox.Location = new Point(157, 108);
         userNameInputTextBox.Name = "userNameInputTextBox";
         userNameInputTextBox.Size = new Size(221, 22);
         userNameInputTextBox.TabIndex = 3;
@@ -80,7 +81,7 @@ partial class WelcomeForm
         // startButton
         // 
         startButton.Font = new Font("Cambria", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        startButton.Location = new Point(221, 134);
+        startButton.Location = new Point(224, 134);
         startButton.Name = "startButton";
         startButton.Size = new Size(75, 21);
         startButton.TabIndex = 4;
@@ -108,11 +109,22 @@ partial class WelcomeForm
         idiotPictureBox.TabIndex = 6;
         idiotPictureBox.TabStop = false;
         // 
+        // QuestionManagerButton
+        // 
+        QuestionManagerButton.Location = new Point(388, 159);
+        QuestionManagerButton.Name = "QuestionManagerButton";
+        QuestionManagerButton.Size = new Size(146, 23);
+        QuestionManagerButton.TabIndex = 7;
+        QuestionManagerButton.Text = "Менеджер вопросов";
+        QuestionManagerButton.UseVisualStyleBackColor = true;
+        QuestionManagerButton.Click += QuestionManagerButton_Click;
+        // 
         // WelcomeForm
         // 
         AutoScaleDimensions = new SizeF(7F, 14F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(546, 194);
+        Controls.Add(QuestionManagerButton);
         Controls.Add(idiotPictureBox);
         Controls.Add(pictureBox1);
         Controls.Add(startButton);
@@ -132,12 +144,13 @@ partial class WelcomeForm
 
     #endregion
 
+    public static TextBox userNameInputTextBox;
+
     private Label welcomeLabel;
     private Label gameNameLabel;
     private Label label1;
     private Button startButton;
     private PictureBox pictureBox1;
     private PictureBox idiotPictureBox;
-
-    public TextBox userNameInputTextBox;
+    private Button QuestionManagerButton;
 }
