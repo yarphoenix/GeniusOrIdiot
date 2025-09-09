@@ -15,11 +15,6 @@ public partial class WelcomeForm : Form
         main.Show();
     }
 
-    private static void WelcomeForm_FormClosing(object sender, EventArgs e)
-    {
-        Application.Exit();
-    }
-
     private void QuestionManagerButton_Click(object sender, EventArgs e)
     {
         var manager = new QuestionsManagerForm();

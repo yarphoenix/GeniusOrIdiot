@@ -134,7 +134,9 @@ partial class WelcomeForm
         Controls.Add(welcomeLabel);
         Font = new Font("Cambria", 9F);
         ForeColor = SystemColors.ControlText;
+        MaximizeBox = false;
         Name = "WelcomeForm";
+        StartPosition = FormStartPosition.CenterScreen;
         Text = "Гений или Идиот";
         ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
         ((System.ComponentModel.ISupportInitialize)idiotPictureBox).EndInit();
