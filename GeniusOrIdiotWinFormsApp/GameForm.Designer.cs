@@ -39,6 +39,8 @@ partial class GameForm
         QuitToolStripMenuItem = new ToolStripMenuItem();
         QuestionManagerToolStripMenuItem = new ToolStripMenuItem();
         errorLabel = new Label();
+        RemainingTimeLabel = new Label();
+        SeparatorLabel = new Label();
         menuStrip.SuspendLayout();
         SuspendLayout();
         // 
@@ -137,11 +139,33 @@ partial class GameForm
         errorLabel.TabIndex = 5;
         errorLabel.Text = "Ошибка";
         // 
-        // MainForm
+        // RemainingTimeLabel
+        // 
+        RemainingTimeLabel.AutoSize = true;
+        RemainingTimeLabel.Font = new Font("Cambria", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        RemainingTimeLabel.Location = new Point(147, 52);
+        RemainingTimeLabel.Name = "RemainingTimeLabel";
+        RemainingTimeLabel.Size = new Size(128, 16);
+        RemainingTimeLabel.TabIndex = 6;
+        RemainingTimeLabel.Text = "Времени осталось: ";
+        // 
+        // SeparatorLabel
+        // 
+        SeparatorLabel.AutoSize = true;
+        SeparatorLabel.Font = new Font("Cambria", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        SeparatorLabel.Location = new Point(136, 51);
+        SeparatorLabel.Name = "SeparatorLabel";
+        SeparatorLabel.Size = new Size(11, 16);
+        SeparatorLabel.TabIndex = 7;
+        SeparatorLabel.Text = "|";
+        // 
+        // GameForm
         // 
         AutoScaleDimensions = new SizeF(7F, 14F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(632, 200);
+        Controls.Add(SeparatorLabel);
+        Controls.Add(RemainingTimeLabel);
         Controls.Add(errorLabel);
         Controls.Add(userAnswerTextBox);
         Controls.Add(questionTextLabel);
@@ -174,4 +198,6 @@ partial class GameForm
     private ToolStripMenuItem QuitToolStripMenuItem;
     private Label errorLabel;
     private ToolStripMenuItem QuestionManagerToolStripMenuItem;
+    private Label RemainingTimeLabel;
+    private Label SeparatorLabel;
 }
