@@ -28,7 +28,7 @@ partial class GameForm
     /// </summary>
     private void InitializeComponent()
     {
-        nextButton = new Button();
+        NextButton = new Button();
         questionNumberLabel = new Label();
         questionTextLabel = new Label();
         userAnswerTextBox = new TextBox();
@@ -44,18 +44,18 @@ partial class GameForm
         menuStrip.SuspendLayout();
         SuspendLayout();
         // 
-        // nextButton
+        // NextButton
         // 
-        nextButton.Dock = DockStyle.Bottom;
-        nextButton.Font = new Font("Century Schoolbook", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-        nextButton.Location = new Point(0, 144);
-        nextButton.Margin = new Padding(4, 3, 4, 3);
-        nextButton.Name = "nextButton";
-        nextButton.Size = new Size(632, 56);
-        nextButton.TabIndex = 0;
-        nextButton.Text = "ДАЛЕЕ";
-        nextButton.UseVisualStyleBackColor = true;
-        nextButton.Click += nextButton_Click;
+        NextButton.Dock = DockStyle.Bottom;
+        NextButton.Font = new Font("Century Schoolbook", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+        NextButton.Location = new Point(0, 144);
+        NextButton.Margin = new Padding(4, 3, 4, 3);
+        NextButton.Name = "NextButton";
+        NextButton.Size = new Size(632, 56);
+        NextButton.TabIndex = 0;
+        NextButton.Text = "ДАЛЕЕ";
+        NextButton.UseVisualStyleBackColor = true;
+        NextButton.Click += NextButton_Click;
         // 
         // questionNumberLabel
         // 
@@ -83,8 +83,6 @@ partial class GameForm
         userAnswerTextBox.Name = "userAnswerTextBox";
         userAnswerTextBox.Size = new Size(413, 22);
         userAnswerTextBox.TabIndex = 3;
-        userAnswerTextBox.Click += userAnswerTextBox_Click;
-        userAnswerTextBox.TextChanged += userAnswerTextBox_TextChanged;
         // 
         // menuStrip
         // 
@@ -170,7 +168,7 @@ partial class GameForm
         Controls.Add(userAnswerTextBox);
         Controls.Add(questionTextLabel);
         Controls.Add(questionNumberLabel);
-        Controls.Add(nextButton);
+        Controls.Add(NextButton);
         Controls.Add(menuStrip);
         Font = new Font("Cambria", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
         MainMenuStrip = menuStrip;
@@ -187,7 +185,7 @@ partial class GameForm
 
     #endregion
 
-    private Button nextButton;
+    private Button NextButton;
     private Label questionNumberLabel;
     private Label questionTextLabel;
     private TextBox userAnswerTextBox;
