@@ -29,17 +29,20 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QuestionsManagerForm));
             QuestionsGridView = new DataGridView();
             QuestionTextColumn = new DataGridViewTextBoxColumn();
             AnswerColumn = new DataGridViewTextBoxColumn();
             DeleteQuestionMenuStrip = new ContextMenuStrip(components);
             DeleteQuestionToolStripMenuItem = new ToolStripMenuItem();
             groupBox1 = new GroupBox();
+            ErrorLabel = new Label();
             AddQuestionButton = new Button();
             AnswerLabel = new Label();
             AnswerTextBox = new TextBox();
             QuestionTextBox = new TextBox();
             QuestionTextLabel = new Label();
+            toolTipValidation = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)QuestionsGridView).BeginInit();
             DeleteQuestionMenuStrip.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -54,109 +57,96 @@
             QuestionsGridView.Columns.AddRange(new DataGridViewColumn[] { QuestionTextColumn, AnswerColumn });
             QuestionsGridView.ContextMenuStrip = DeleteQuestionMenuStrip;
             QuestionsGridView.Cursor = Cursors.Hand;
-            QuestionsGridView.Dock = DockStyle.Top;
-            QuestionsGridView.Location = new Point(0, 0);
+            resources.ApplyResources(QuestionsGridView, "QuestionsGridView");
             QuestionsGridView.Name = "QuestionsGridView";
             QuestionsGridView.ReadOnly = true;
-            QuestionsGridView.Size = new Size(623, 230);
-            QuestionsGridView.TabIndex = 0;
             // 
             // QuestionTextColumn
             // 
             QuestionTextColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            QuestionTextColumn.HeaderText = "Текст вопроса";
+            resources.ApplyResources(QuestionTextColumn, "QuestionTextColumn");
             QuestionTextColumn.Name = "QuestionTextColumn";
             QuestionTextColumn.ReadOnly = true;
             // 
             // AnswerColumn
             // 
             AnswerColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            AnswerColumn.HeaderText = "Ответ";
+            resources.ApplyResources(AnswerColumn, "AnswerColumn");
             AnswerColumn.Name = "AnswerColumn";
             AnswerColumn.ReadOnly = true;
-            AnswerColumn.Width = 64;
             // 
             // DeleteQuestionMenuStrip
             // 
-            DeleteQuestionMenuStrip.Font = new Font("Cambria", 9F);
+            resources.ApplyResources(DeleteQuestionMenuStrip, "DeleteQuestionMenuStrip");
             DeleteQuestionMenuStrip.Items.AddRange(new ToolStripItem[] { DeleteQuestionToolStripMenuItem });
             DeleteQuestionMenuStrip.Name = "contextMenuStrip1";
-            DeleteQuestionMenuStrip.Size = new Size(160, 26);
             // 
             // DeleteQuestionToolStripMenuItem
             // 
             DeleteQuestionToolStripMenuItem.Image = Properties.Resources.delete_forever_24dp_000000;
             DeleteQuestionToolStripMenuItem.Name = "DeleteQuestionToolStripMenuItem";
-            DeleteQuestionToolStripMenuItem.Size = new Size(159, 22);
-            DeleteQuestionToolStripMenuItem.Text = "Удалить вопрос";
+            resources.ApplyResources(DeleteQuestionToolStripMenuItem, "DeleteQuestionToolStripMenuItem");
             DeleteQuestionToolStripMenuItem.Click += DeleteQuestionToolStripMenuItem_Click;
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(ErrorLabel);
             groupBox1.Controls.Add(AddQuestionButton);
             groupBox1.Controls.Add(AnswerLabel);
             groupBox1.Controls.Add(AnswerTextBox);
             groupBox1.Controls.Add(QuestionTextBox);
             groupBox1.Controls.Add(QuestionTextLabel);
-            groupBox1.Location = new Point(12, 236);
+            resources.ApplyResources(groupBox1, "groupBox1");
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(599, 77);
-            groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Добавить вопрос в список";
+            // 
+            // ErrorLabel
+            // 
+            resources.ApplyResources(ErrorLabel, "ErrorLabel");
+            ErrorLabel.ForeColor = Color.DarkRed;
+            ErrorLabel.Name = "ErrorLabel";
             // 
             // AddQuestionButton
             // 
-            AddQuestionButton.Location = new Point(487, 26);
+            resources.ApplyResources(AddQuestionButton, "AddQuestionButton");
             AddQuestionButton.Name = "AddQuestionButton";
-            AddQuestionButton.Size = new Size(90, 34);
-            AddQuestionButton.TabIndex = 3;
-            AddQuestionButton.Text = "Добавить";
             AddQuestionButton.UseVisualStyleBackColor = true;
             AddQuestionButton.Click += AddQuestionButton_Click;
             // 
             // AnswerLabel
             // 
-            AnswerLabel.AutoSize = true;
-            AnswerLabel.Location = new Point(375, 36);
+            resources.ApplyResources(AnswerLabel, "AnswerLabel");
             AnswerLabel.Name = "AnswerLabel";
-            AnswerLabel.Size = new Size(39, 14);
-            AnswerLabel.TabIndex = 2;
-            AnswerLabel.Text = "Ответ";
+            toolTipValidation.SetToolTip(AnswerLabel, resources.GetString("AnswerLabel.ToolTip"));
             // 
             // AnswerTextBox
             // 
-            AnswerTextBox.Location = new Point(420, 33);
+            resources.ApplyResources(AnswerTextBox, "AnswerTextBox");
             AnswerTextBox.Name = "AnswerTextBox";
-            AnswerTextBox.Size = new Size(61, 22);
-            AnswerTextBox.TabIndex = 1;
+            toolTipValidation.SetToolTip(AnswerTextBox, resources.GetString("AnswerTextBox.ToolTip"));
+            AnswerTextBox.Click += AnswerTextBox_Click;
             // 
             // QuestionTextBox
             // 
-            QuestionTextBox.Location = new Point(62, 33);
+            QuestionTextBox.ForeColor = Color.Gray;
+            resources.ApplyResources(QuestionTextBox, "QuestionTextBox");
             QuestionTextBox.Name = "QuestionTextBox";
-            QuestionTextBox.Size = new Size(307, 22);
-            QuestionTextBox.TabIndex = 1;
+            QuestionTextBox.Enter += QuestionTextBox_Enter;
+            QuestionTextBox.Leave += QuestionTextBox_Leave;
             // 
             // QuestionTextLabel
             // 
-            QuestionTextLabel.AutoSize = true;
-            QuestionTextLabel.Location = new Point(20, 36);
+            resources.ApplyResources(QuestionTextLabel, "QuestionTextLabel");
             QuestionTextLabel.Name = "QuestionTextLabel";
-            QuestionTextLabel.Size = new Size(36, 14);
-            QuestionTextLabel.TabIndex = 0;
-            QuestionTextLabel.Text = "Текст";
             // 
             // QuestionsManagerForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 14F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(623, 327);
             Controls.Add(groupBox1);
             Controls.Add(QuestionsGridView);
-            Font = new Font("Cambria", 9F);
+            MaximizeBox = false;
             Name = "QuestionsManagerForm";
-            Text = "Менеджер вопросов";
             Load += QuestionsManagerForm_Load;
             ((System.ComponentModel.ISupportInitialize)QuestionsGridView).EndInit();
             DeleteQuestionMenuStrip.ResumeLayout(false);
@@ -178,5 +168,7 @@
         private DataGridViewTextBoxColumn AnswerColumn;
         private ContextMenuStrip DeleteQuestionMenuStrip;
         private ToolStripMenuItem DeleteQuestionToolStripMenuItem;
+        private ToolTip toolTipValidation;
+        private Label ErrorLabel;
     }
 }

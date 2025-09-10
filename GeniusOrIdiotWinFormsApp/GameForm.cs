@@ -2,11 +2,11 @@ using GeniusOrIdiotClassLibrary;
 
 namespace GeniusOrIdiotWinFormsApp;
 
-public partial class MainForm : Form
+public partial class GameForm : Form
 {
     private Game _game;
 
-    public MainForm()
+    public GameForm()
     {
         InitializeComponent();
         errorLabel.Visible = false;

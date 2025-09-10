@@ -4,9 +4,12 @@ namespace GeniusOrIdiotWinFormsApp
 {
     public partial class QuestionsManagerForm : Form
     {
+        private const string DefaultQuestionPlaceholder = "Введите текст";
+
         public QuestionsManagerForm()
         {
             InitializeComponent();
+            ErrorLabel.Visible = false;
         }
 
         private void QuestionsManagerForm_Load(object sender, EventArgs e)
@@ -22,7 +25,8 @@ namespace GeniusOrIdiotWinFormsApp
         {
             if (!TryValidateQuestionInput(out string questionText, out int questionAnswer, out string errorMessage))
             {
-                MessageBox.Show(errorMessage, @"Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLabel.Visible = true;
+                ErrorLabel.Text = errorMessage;
                 return;
             }
 
@@ -31,6 +35,7 @@ namespace GeniusOrIdiotWinFormsApp
             QuestionsStorage.Add(question);
             QuestionsGridView.Rows.Add(question.Text, question.Answer);
             ShowOperationSuccess("Вопрос успешно добавлен!");
+            ErrorLabel.Visible = false;
         }
 
         private void DeleteQuestionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -57,7 +62,7 @@ namespace GeniusOrIdiotWinFormsApp
             errorMessage = string.Empty;
             questionAnswer = 0;
 
-            if (questionText.Length == 0)
+            if (questionText == DefaultQuestionPlaceholder)
             {
                 errorMessage = "Введите текст вопроса.";
                 return false;
@@ -75,6 +80,31 @@ namespace GeniusOrIdiotWinFormsApp
             }
 
             return true;
+        }
+
+        private void QuestionTextBox_Enter(object sender, EventArgs e)
+        {
+            if (QuestionTextBox.Text == DefaultQuestionPlaceholder)
+            {
+                QuestionTextBox.Text = string.Empty;
+                QuestionTextBox.ForeColor = Color.Black;
+            }
+
+            ErrorLabel.Visible = false;
+        }
+
+        private void QuestionTextBox_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(QuestionTextBox.Text))
+            {
+                QuestionTextBox.Text = DefaultQuestionPlaceholder;
+                QuestionTextBox.ForeColor = Color.Gray;
+            }
+        }
+
+        private void AnswerTextBox_Click(object sender, EventArgs e)
+        {
+            ErrorLabel.Visible = false;
         }
 
         private static bool ConfirmDeleteQuestion(Question question)

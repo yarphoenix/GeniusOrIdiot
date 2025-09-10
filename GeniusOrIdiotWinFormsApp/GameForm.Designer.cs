@@ -1,6 +1,6 @@
 ﻿namespace GeniusOrIdiotWinFormsApp;
 
-partial class MainForm
+partial class GameForm
 {
     /// <summary>
     ///  Required designer variable.
@@ -37,8 +37,8 @@ partial class MainForm
         ShowResultsToolMenuItem = new ToolStripMenuItem();
         RestartToolMenuItem = new ToolStripMenuItem();
         QuitToolStripMenuItem = new ToolStripMenuItem();
-        errorLabel = new Label();
         QuestionManagerToolStripMenuItem = new ToolStripMenuItem();
+        errorLabel = new Label();
         menuStrip.SuspendLayout();
         SuspendLayout();
         // 
@@ -46,10 +46,10 @@ partial class MainForm
         // 
         nextButton.Dock = DockStyle.Bottom;
         nextButton.Font = new Font("Century Schoolbook", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-        nextButton.Location = new Point(0, 159);
+        nextButton.Location = new Point(0, 144);
         nextButton.Margin = new Padding(4, 3, 4, 3);
         nextButton.Name = "nextButton";
-        nextButton.Size = new Size(606, 81);
+        nextButton.Size = new Size(632, 56);
         nextButton.TabIndex = 0;
         nextButton.Text = "ДАЛЕЕ";
         nextButton.UseVisualStyleBackColor = true;
@@ -71,9 +71,9 @@ partial class MainForm
         questionTextLabel.Font = new Font("Cambria", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 204);
         questionTextLabel.Location = new Point(50, 72);
         questionTextLabel.Name = "questionTextLabel";
-        questionTextLabel.Size = new Size(108, 17);
+        questionTextLabel.Size = new Size(104, 17);
         questionTextLabel.TabIndex = 2;
-        questionTextLabel.Text = "Текст вопроса:";
+        questionTextLabel.Text = "Текст вопроса";
         // 
         // userAnswerTextBox
         // 
@@ -89,7 +89,7 @@ partial class MainForm
         menuStrip.Items.AddRange(new ToolStripItem[] { ActionsStripMenuItem, QuestionManagerToolStripMenuItem });
         menuStrip.Location = new Point(0, 0);
         menuStrip.Name = "menuStrip";
-        menuStrip.Size = new Size(606, 24);
+        menuStrip.Size = new Size(632, 24);
         menuStrip.TabIndex = 4;
         menuStrip.Text = "menuStrip";
         // 
@@ -122,6 +122,11 @@ partial class MainForm
         QuitToolStripMenuItem.Text = "Выйти";
         QuitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
         // 
+        // QuestionManagerToolStripMenuItem
+        // 
+        QuestionManagerToolStripMenuItem.Name = "QuestionManagerToolStripMenuItem";
+        QuestionManagerToolStripMenuItem.Size = new Size(12, 20);
+        // 
         // errorLabel
         // 
         errorLabel.AutoSize = true;
@@ -136,7 +141,7 @@ partial class MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 14F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(606, 240);
+        ClientSize = new Size(632, 200);
         Controls.Add(errorLabel);
         Controls.Add(userAnswerTextBox);
         Controls.Add(questionTextLabel);
@@ -145,7 +150,9 @@ partial class MainForm
         Controls.Add(menuStrip);
         Font = new Font("Cambria", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
         MainMenuStrip = menuStrip;
-        Name = "MainForm";
+        MaximizeBox = false;
+        Name = "GameForm";
+        StartPosition = FormStartPosition.CenterScreen;
         Text = "Гений или Идиот";
         Load += MainForm_Load;
         menuStrip.ResumeLayout(false);

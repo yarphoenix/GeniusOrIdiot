@@ -10,14 +10,9 @@ public partial class WelcomeForm : Form
     private void startButton_Click(object sender, EventArgs e)
     {
         Hide();
-        var main = new MainForm();
+        var main = new GameForm();
         main.Closed += (s, args) => Close();
         main.Show();
-    }
-
-    private static void WelcomeForm_FormClosing(object sender, EventArgs e)
-    {
-        Application.Exit();
     }
 
     private void QuestionManagerButton_Click(object sender, EventArgs e)
