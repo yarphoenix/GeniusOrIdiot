@@ -19,7 +19,7 @@ public static class InputValidator
         catch (OverflowException)
         {
             number = 0;
-            error = "Введенное число слишком большое число";
+            error = "Введенное число слишком большое";
             return false;
         }
     }

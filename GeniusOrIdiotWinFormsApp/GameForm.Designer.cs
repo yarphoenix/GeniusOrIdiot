@@ -1,6 +1,6 @@
 ﻿namespace GeniusOrIdiotWinFormsApp;
 
-partial class MainForm
+partial class GameForm
 {
     /// <summary>
     ///  Required designer variable.
@@ -28,7 +28,7 @@ partial class MainForm
     /// </summary>
     private void InitializeComponent()
     {
-        nextButton = new Button();
+        NextButton = new Button();
         questionNumberLabel = new Label();
         questionTextLabel = new Label();
         userAnswerTextBox = new TextBox();
@@ -37,22 +37,25 @@ partial class MainForm
         ShowResultsToolMenuItem = new ToolStripMenuItem();
         RestartToolMenuItem = new ToolStripMenuItem();
         QuitToolStripMenuItem = new ToolStripMenuItem();
+        QuestionManagerToolStripMenuItem = new ToolStripMenuItem();
         errorLabel = new Label();
+        RemainingTimeLabel = new Label();
+        SeparatorLabel = new Label();
         menuStrip.SuspendLayout();
         SuspendLayout();
         // 
-        // nextButton
+        // NextButton
         // 
-        nextButton.Dock = DockStyle.Bottom;
-        nextButton.Font = new Font("Century Schoolbook", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-        nextButton.Location = new Point(0, 159);
-        nextButton.Margin = new Padding(4, 3, 4, 3);
-        nextButton.Name = "nextButton";
-        nextButton.Size = new Size(606, 81);
-        nextButton.TabIndex = 0;
-        nextButton.Text = "ДАЛЕЕ";
-        nextButton.UseVisualStyleBackColor = true;
-        nextButton.Click += nextButton_Click;
+        NextButton.Dock = DockStyle.Bottom;
+        NextButton.Font = new Font("Century Schoolbook", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+        NextButton.Location = new Point(0, 144);
+        NextButton.Margin = new Padding(4, 3, 4, 3);
+        NextButton.Name = "NextButton";
+        NextButton.Size = new Size(632, 56);
+        NextButton.TabIndex = 0;
+        NextButton.Text = "ДАЛЕЕ";
+        NextButton.UseVisualStyleBackColor = true;
+        NextButton.Click += NextButton_Click;
         // 
         // questionNumberLabel
         // 
@@ -70,9 +73,9 @@ partial class MainForm
         questionTextLabel.Font = new Font("Cambria", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 204);
         questionTextLabel.Location = new Point(50, 72);
         questionTextLabel.Name = "questionTextLabel";
-        questionTextLabel.Size = new Size(108, 17);
+        questionTextLabel.Size = new Size(104, 17);
         questionTextLabel.TabIndex = 2;
-        questionTextLabel.Text = "Текст вопроса:";
+        questionTextLabel.Text = "Текст вопроса";
         // 
         // userAnswerTextBox
         // 
@@ -80,15 +83,13 @@ partial class MainForm
         userAnswerTextBox.Name = "userAnswerTextBox";
         userAnswerTextBox.Size = new Size(413, 22);
         userAnswerTextBox.TabIndex = 3;
-        userAnswerTextBox.TextChanged += userAnswerTextBox_TextChanged;
-        userAnswerTextBox.Click += userAnswerTextBox_Click;
         // 
         // menuStrip
         // 
-        menuStrip.Items.AddRange(new ToolStripItem[] { ActionsStripMenuItem });
+        menuStrip.Items.AddRange(new ToolStripItem[] { ActionsStripMenuItem, QuestionManagerToolStripMenuItem });
         menuStrip.Location = new Point(0, 0);
         menuStrip.Name = "menuStrip";
-        menuStrip.Size = new Size(606, 24);
+        menuStrip.Size = new Size(632, 24);
         menuStrip.TabIndex = 4;
         menuStrip.Text = "menuStrip";
         // 
@@ -121,6 +122,11 @@ partial class MainForm
         QuitToolStripMenuItem.Text = "Выйти";
         QuitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
         // 
+        // QuestionManagerToolStripMenuItem
+        // 
+        QuestionManagerToolStripMenuItem.Name = "QuestionManagerToolStripMenuItem";
+        QuestionManagerToolStripMenuItem.Size = new Size(12, 20);
+        // 
         // errorLabel
         // 
         errorLabel.AutoSize = true;
@@ -131,20 +137,44 @@ partial class MainForm
         errorLabel.TabIndex = 5;
         errorLabel.Text = "Ошибка";
         // 
-        // MainForm
+        // RemainingTimeLabel
+        // 
+        RemainingTimeLabel.AutoSize = true;
+        RemainingTimeLabel.Font = new Font("Cambria", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        RemainingTimeLabel.Location = new Point(147, 52);
+        RemainingTimeLabel.Name = "RemainingTimeLabel";
+        RemainingTimeLabel.Size = new Size(128, 16);
+        RemainingTimeLabel.TabIndex = 6;
+        RemainingTimeLabel.Text = "Времени осталось: ";
+        // 
+        // SeparatorLabel
+        // 
+        SeparatorLabel.AutoSize = true;
+        SeparatorLabel.Font = new Font("Cambria", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        SeparatorLabel.Location = new Point(136, 51);
+        SeparatorLabel.Name = "SeparatorLabel";
+        SeparatorLabel.Size = new Size(11, 16);
+        SeparatorLabel.TabIndex = 7;
+        SeparatorLabel.Text = "|";
+        // 
+        // GameForm
         // 
         AutoScaleDimensions = new SizeF(7F, 14F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(606, 240);
+        ClientSize = new Size(632, 200);
+        Controls.Add(SeparatorLabel);
+        Controls.Add(RemainingTimeLabel);
         Controls.Add(errorLabel);
         Controls.Add(userAnswerTextBox);
         Controls.Add(questionTextLabel);
         Controls.Add(questionNumberLabel);
-        Controls.Add(nextButton);
+        Controls.Add(NextButton);
         Controls.Add(menuStrip);
         Font = new Font("Cambria", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
         MainMenuStrip = menuStrip;
-        Name = "MainForm";
+        MaximizeBox = false;
+        Name = "GameForm";
+        StartPosition = FormStartPosition.CenterScreen;
         Text = "Гений или Идиот";
         Load += MainForm_Load;
         menuStrip.ResumeLayout(false);
@@ -155,7 +185,7 @@ partial class MainForm
 
     #endregion
 
-    private Button nextButton;
+    private Button NextButton;
     private Label questionNumberLabel;
     private Label questionTextLabel;
     private TextBox userAnswerTextBox;
@@ -165,4 +195,7 @@ partial class MainForm
     private ToolStripMenuItem RestartToolMenuItem;
     private ToolStripMenuItem QuitToolStripMenuItem;
     private Label errorLabel;
+    private ToolStripMenuItem QuestionManagerToolStripMenuItem;
+    private Label RemainingTimeLabel;
+    private Label SeparatorLabel;
 }

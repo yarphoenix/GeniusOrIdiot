@@ -10,7 +10,13 @@ public static class FileProvider
         writer.WriteLine(value);
     }
 
-    public static string GetValue(string fileName)
+    public static void Replace(string fileName, string value)
+    {
+        using var writer = new StreamWriter(fileName, false, Encoding.UTF8);
+        writer.WriteLine(value);
+    }
+
+    public static string Get(string fileName)
     {
         using var reader = new StreamReader(fileName, Encoding.UTF8);
         string value = reader.ReadToEnd();

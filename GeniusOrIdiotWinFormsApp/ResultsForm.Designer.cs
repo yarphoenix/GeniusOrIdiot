@@ -29,56 +29,64 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            resultsGridView = new DataGridView();
+            ResultsGridView = new DataGridView();
             userNameColumn = new DataGridViewTextBoxColumn();
             correctAnswersCountColumn = new DataGridViewTextBoxColumn();
             DiagnoseColumn = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)resultsGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ResultsGridView).BeginInit();
             SuspendLayout();
             // 
-            // resultsGridView
+            // ResultsGridView
             // 
+            ResultsGridView.AllowUserToAddRows = false;
+            ResultsGridView.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Font = new Font("Cambria Math", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            resultsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            resultsGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            resultsGridView.Columns.AddRange(new DataGridViewColumn[] { userNameColumn, correctAnswersCountColumn, DiagnoseColumn });
-            resultsGridView.Dock = DockStyle.Fill;
-            resultsGridView.Location = new Point(0, 0);
-            resultsGridView.Name = "resultsGridView";
-            resultsGridView.Size = new Size(375, 440);
-            resultsGridView.TabIndex = 0;
+            ResultsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            ResultsGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            ResultsGridView.Columns.AddRange(new DataGridViewColumn[] { userNameColumn, correctAnswersCountColumn, DiagnoseColumn });
+            ResultsGridView.Dock = DockStyle.Top;
+            ResultsGridView.Location = new Point(0, 0);
+            ResultsGridView.Name = "ResultsGridView";
+            ResultsGridView.ReadOnly = true;
+            ResultsGridView.Size = new Size(375, 440);
+            ResultsGridView.TabIndex = 0;
             // 
             // userNameColumn
             // 
             userNameColumn.HeaderText = "Имя";
             userNameColumn.Name = "userNameColumn";
+            userNameColumn.ReadOnly = true;
             // 
             // correctAnswersCountColumn
             // 
             correctAnswersCountColumn.HeaderText = "Кол-во правильных ответов";
             correctAnswersCountColumn.Name = "correctAnswersCountColumn";
+            correctAnswersCountColumn.ReadOnly = true;
             // 
             // DiagnoseColumn
             // 
             DiagnoseColumn.HeaderText = "Диагноз";
             DiagnoseColumn.Name = "DiagnoseColumn";
+            DiagnoseColumn.ReadOnly = true;
             // 
             // ResultsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(375, 440);
-            Controls.Add(resultsGridView);
+            Controls.Add(ResultsGridView);
+            MaximizeBox = false;
             Name = "ResultsForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Результаты";
             Load += ResultsForm_Load;
-            ((System.ComponentModel.ISupportInitialize)resultsGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ResultsGridView).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView resultsGridView;
+        private DataGridView ResultsGridView;
         private DataGridViewTextBoxColumn userNameColumn;
         private DataGridViewTextBoxColumn correctAnswersCountColumn;
         private DataGridViewTextBoxColumn DiagnoseColumn;
