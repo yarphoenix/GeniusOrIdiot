@@ -1,38 +1,33 @@
-﻿namespace GeniusOrIdiotClassLibrary;
+﻿using Newtonsoft.Json;
+
+namespace GeniusOrIdiotClassLibrary;
 
 public static class UsersResultStorage
 {
-    private const string FileName = "UserResults.txt";
+    private const string FileName = "UserResults.json";
 
-    public static void Save(User user)
+    public static void Append(User user)
     {
-        var result = $"{user.Name}#{user.CorrectAnswerCount}#{user.Diagnose}";
-        FileProvider.Append(FileName, result);
+        var userResults = GetUserResults();
+        userResults.Add(user);
+        Save(userResults);
     }
 
     public static List<User> GetUserResults()
     {
-        string value = FileProvider.GetValue(FileName);
-        string[] lines = value.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
-
-        var results = new List<User>();
-
-        foreach (string line in lines)
+        if (!FileProvider.Exists(FileName))
         {
-            string[] values = line.Split('#');
-            string name = values[0];
-            int correctAnswerCount = int.Parse(values[1]);
-            string diagnose = values[2];
-
-            var user = new User(name)
-            {
-                CorrectAnswerCount = correctAnswerCount,
-                Diagnose = diagnose
-            };
-
-            results.Add(user);
+            return [];
         }
 
-        return results;
+        string fileData = FileProvider.Get(FileName);
+        var userResults = JsonConvert.DeserializeObject<List<User>>(fileData);
+        return userResults;
+    }
+
+    private static void Save(List<User> userResults)
+    {
+        string jsonData = JsonConvert.SerializeObject(userResults, Formatting.Indented);
+        FileProvider.Replace(FileName, jsonData);
     }
 }
