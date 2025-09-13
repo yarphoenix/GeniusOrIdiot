@@ -14,7 +14,7 @@ public partial class ResultsForm : Form
         var results = UsersResultStorage.GetUserResults();
         foreach (var result in results)
         {
-            resultsGridView.Rows.Add(result.Name, result.CorrectAnswerCount, result.Diagnose);
+            ResultsGridView.Rows.Add(result.Name, result.CorrectAnswerCount, result.Diagnose);
         }
     }
 }
