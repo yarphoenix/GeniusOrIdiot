@@ -17,20 +17,33 @@ public partial class GameForm : Form
         var user = new User(WelcomeForm.userNameInputTextBox.Text);
         _game = new Game(user);
 
-        ShowNextQuestion();
+        _game.Tick += OnTick;
+        _game.QuestionChanged += OnQuestionChanged;
+        _game.GameEnded += OnGameEnded;
+
+        _game.GetNextQuestion();
     }
 
-    private void ShowNextQuestion()
+    private void OnTick(int seconds)
     {
-        var currentQuestion = _game.GetNextQuestion();
-
-        questionTextLabel.Text = currentQuestion.Text;
-
-        string questionNumber = _game.GetQuestionNumberText();
-        questionNumberLabel.Text = "Вопрос № " + questionNumber;
+        ChangeRemainingTimeLabelColor(seconds);
+        RemainingTimeLabel.Text = "Времени осталось: " + seconds;
     }
 
-    private void nextButton_Click(object sender, EventArgs e)
+    private void OnQuestionChanged(Question question)
+    {
+        questionTextLabel.Text = question.Text;
+        questionNumberLabel.Text = "Вопрос № " + _game.GetQuestionNumberText();
+        userAnswerTextBox.Clear();
+        errorLabel.Visible = false;
+    }
+
+    private void OnGameEnded(string diagnose)
+    {
+        MessageBox.Show(diagnose);
+    }
+
+    private void NextButton_Click(object sender, EventArgs e)
     {
         bool parsed = InputValidator.TryParseToNumber(userAnswerTextBox.Text, out int userAnswer, out string error);
         if (!parsed)
@@ -41,21 +54,35 @@ public partial class GameForm : Form
         }
 
         _game.AcceptAnswer(userAnswer);
-
-        if (_game.IsEnd())
-        {
-            string diagnose = _game.GetDiagnose();
-            MessageBox.Show(diagnose);
-        }
-
-        ShowNextQuestion();
-        userAnswerTextBox.Clear();
     }
 
     private void ShowResultsToolMenuItem_Click(object sender, EventArgs e)
     {
+        _game.Pause();
+
         var resultsForm = new ResultsForm();
         resultsForm.ShowDialog();
+
+        _game.Resume();
+    }
+
+    private void ChangeRemainingTimeLabelColor(int seconds)
+    {
+        var colors = new List<Color>
+        {
+            Color.Red,
+            Color.Orange,
+            Color.Green,
+        };
+
+        double intervalLength = (double)10 / colors.Count;
+
+        var index = (int)(seconds / intervalLength);
+
+        if (index >= colors.Count)
+            index = colors.Count - 1;
+
+        RemainingTimeLabel.ForeColor = colors[index];
     }
 
     private void RestartToolMenuItem_Click(object sender, EventArgs e)
@@ -68,13 +95,14 @@ public partial class GameForm : Form
         Application.Exit();
     }
 
-    private void userAnswerTextBox_TextChanged(object sender, EventArgs e)
+    protected override void OnFormClosing(FormClosingEventArgs e)
     {
-        errorLabel.Visible = false;
+        base.OnFormClosing(e);
+
+        _game.Tick -= OnTick;
+        _game.QuestionChanged -= OnQuestionChanged;
+        _game.GameEnded -= OnGameEnded;
     }
 
-    private void userAnswerTextBox_Click(object sender, EventArgs e)
-    {
-        userAnswerTextBox.Clear();
-    }
+
 }
